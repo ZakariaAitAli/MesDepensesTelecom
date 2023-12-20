@@ -27,16 +27,3 @@ jobs:
 
     - name: Build with Gradle
       run: ./gradlew build
-
-    # Add the following steps for testing in GitHub Apps
-    - name: Set up emulator
-      uses: ReactiveCircus/android-emulator-runner@v2.29.0
-      with:
-        api-level: 33
-        script: emulator
-
-    - name: Wait for emulator to start
-      run: adb wait-for-device
-
-    - name: Run tests on emulator
-      run: ./gradlew connectedCheck

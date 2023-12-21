@@ -1,4 +1,4 @@
-package com.gi3.mesdepensestelecom.database;
+package com.gi3.mesdepensestelecom.database.sqlite;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

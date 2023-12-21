@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.Menu;
 
-import com.gi3.mesdepensestelecom.database.DatabaseManager;
+import com.gi3.mesdepensestelecom.database.sqlite.DatabaseManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;

@@ -13,7 +13,6 @@ const db = mysql.createConnection({
     user: 'zakaria',
     password: 'root1234',
     database: 'DepenseTelecom',
-    insecureAuth: true
 });
 
 db.connect(err => {

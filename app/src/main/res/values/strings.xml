@@ -12,6 +12,7 @@
     <string name="menu_slideshow">Slideshow</string>
     <string name="menu_settings">Settings</string>
     <string name="menu_login">Login</string>
+    <string name="menu_register">Register</string>
 
     <string name="lorem_ipsum_title">Lorem Ipsum"</string>
     <string name="lorem_ipsum">Lorem Ipsum is simply placeholder text of the printing and
@@ -24,8 +25,11 @@
         item
     </string>
     <string name="welcome_please_log_in">Welcome, please log in</string>
+    <string name="welcome_please_register">Welcome, please register</string>
     <string name="login">Login</string>
     <string name="password">Password</string>
     <string name="username">Username</string>
     <string name="not_yet_registered_signup">Not yet registered? Signup</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="already_registered_login">Already registered? Login</string>
 </resources>

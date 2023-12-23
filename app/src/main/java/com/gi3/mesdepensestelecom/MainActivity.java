@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navigationView = binding.navView;
         if (navigationView != null) {
             mAppBarConfiguration = new AppBarConfiguration.Builder(
-                    R.id.nav_transform, R.id.nav_reflow, R.id.nav_slideshow, R.id.nav_settings, R.id.nav_login)
+                    R.id.nav_transform, R.id.nav_reflow, R.id.nav_slideshow, R.id.nav_settings, R.id.nav_login, R.id.nav_register)
                     .setOpenableLayout(binding.drawerLayout)
                     .build();
             NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = binding.appBarMain.contentMain.bottomNavView;
         if (bottomNavigationView != null) {
             mAppBarConfiguration = new AppBarConfiguration.Builder(
-                    R.id.nav_transform, R.id.nav_reflow, R.id.nav_slideshow, R.id.nav_login)
+                    R.id.nav_transform, R.id.nav_reflow, R.id.nav_slideshow, R.id.nav_login, R.id.nav_register)
                     .build();
             NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
             NavigationUI.setupWithNavController(bottomNavigationView, navController);
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
             // Add a destination changed listener
             navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
                 // Show BottomNavigationView only when the user is logged in
-                if (destination.getId() == R.id.nav_login) {
+                if (destination.getId() == R.id.nav_login || destination.getId() == R.id.nav_register) {
                     bottomNavigationView.setVisibility(View.GONE);
                     // Hide the FAB in the login fragment
                     if (binding.appBarMain.fab != null) {
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         boolean result = super.onCreateOptionsMenu(menu);
         NavigationView navView = findViewById(R.id.nav_view);
-        if (navView == null && mAppBarConfiguration != null && !mAppBarConfiguration.getTopLevelDestinations().contains(R.id.nav_login)) {
+        if (navView == null && mAppBarConfiguration != null && !mAppBarConfiguration.getTopLevelDestinations().contains(R.id.nav_login) && !mAppBarConfiguration.getTopLevelDestinations().contains(R.id.nav_register)) {
             getMenuInflater().inflate(R.menu.overflow, menu);
         }
         return result;

@@ -1,28 +1,27 @@
 package com.gi3.mesdepensestelecom;
 
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.Menu;
-
-import com.gi3.mesdepensestelecom.database.sqlite.DatabaseManager;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.navigation.NavigationView;
+import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.appcompat.app.AppCompatActivity;
 
+import com.gi3.mesdepensestelecom.database.sqlite.DatabaseManager;
 import com.gi3.mesdepensestelecom.databinding.ActivityMainBinding;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-    private DatabaseManager databaseManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +32,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         // Initialize DatabaseManager
-        databaseManager = new DatabaseManager(this);
+        DatabaseManager databaseManager = new DatabaseManager(this);
 
         // Set the toolbar as the action bar
         setSupportActionBar(binding.appBarMain.toolbar);
 
-        // Set up a Floating Action Button (FAB) with a Snackbar
+        // Set up a Floating Action Button (FAB) with a SnackBar
         if (binding.appBarMain.fab != null) {
             databaseManager.open();
 
@@ -58,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navigationView = binding.navView;
         if (navigationView != null) {
             mAppBarConfiguration = new AppBarConfiguration.Builder(
-                    R.id.nav_transform, R.id.nav_reflow, R.id.nav_slideshow, R.id.nav_settings)
+                    R.id.nav_transform, R.id.nav_reflow, R.id.nav_slideshow, R.id.nav_settings, R.id.nav_login, R.id.nav_register)
                     .setOpenableLayout(binding.drawerLayout)
                     .build();
             NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
@@ -69,10 +68,31 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = binding.appBarMain.contentMain.bottomNavView;
         if (bottomNavigationView != null) {
             mAppBarConfiguration = new AppBarConfiguration.Builder(
-                    R.id.nav_transform, R.id.nav_reflow, R.id.nav_slideshow)
+                    R.id.nav_transform, R.id.nav_reflow, R.id.nav_slideshow, R.id.nav_login, R.id.nav_register)
                     .build();
             NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
             NavigationUI.setupWithNavController(bottomNavigationView, navController);
+
+            // Initially hide BottomNavigationView
+            bottomNavigationView.setVisibility(View.GONE);
+
+            // Add a destination changed listener
+            navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+                // Show BottomNavigationView only when the user is logged in
+                if (destination.getId() == R.id.nav_login || destination.getId() == R.id.nav_register) {
+                    bottomNavigationView.setVisibility(View.GONE);
+                    // Hide the FAB in the login fragment
+                    if (binding.appBarMain.fab != null) {
+                        binding.appBarMain.fab.setVisibility(View.GONE);
+                    }
+                } else {
+                    bottomNavigationView.setVisibility(View.VISIBLE);
+                    // Show the FAB in other fragments
+                    if (binding.appBarMain.fab != null) {
+                        binding.appBarMain.fab.setVisibility(View.VISIBLE);
+                    }
+                }
+            });
         }
     }
 
@@ -81,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         boolean result = super.onCreateOptionsMenu(menu);
         NavigationView navView = findViewById(R.id.nav_view);
-        if (navView == null) {
+        if (navView == null && mAppBarConfiguration != null && !mAppBarConfiguration.getTopLevelDestinations().contains(R.id.nav_login) && !mAppBarConfiguration.getTopLevelDestinations().contains(R.id.nav_register)) {
             getMenuInflater().inflate(R.menu.overflow, menu);
         }
         return result;

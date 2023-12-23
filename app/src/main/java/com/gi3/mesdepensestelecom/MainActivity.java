@@ -3,6 +3,7 @@ package com.gi3.mesdepensestelecom;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -71,6 +72,27 @@ public class MainActivity extends AppCompatActivity {
                     .build();
             NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
             NavigationUI.setupWithNavController(bottomNavigationView, navController);
+
+            // Initially hide BottomNavigationView
+            bottomNavigationView.setVisibility(View.GONE);
+
+            // Add a destination changed listener
+            navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+                // Show BottomNavigationView only when the user is logged in
+                if (destination.getId() == R.id.nav_login) {
+                    bottomNavigationView.setVisibility(View.GONE);
+                    // Hide the FAB in the login fragment
+                    if (binding.appBarMain.fab != null) {
+                        binding.appBarMain.fab.setVisibility(View.GONE);
+                    }
+                } else {
+                    bottomNavigationView.setVisibility(View.VISIBLE);
+                    // Show the FAB in other fragments
+                    if (binding.appBarMain.fab != null) {
+                        binding.appBarMain.fab.setVisibility(View.VISIBLE);
+                    }
+                }
+            });
         }
     }
 
@@ -79,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         boolean result = super.onCreateOptionsMenu(menu);
         NavigationView navView = findViewById(R.id.nav_view);
-        if (navView == null) {
+        if (navView == null && mAppBarConfiguration != null && !mAppBarConfiguration.getTopLevelDestinations().contains(R.id.nav_login)) {
             getMenuInflater().inflate(R.menu.overflow, menu);
         }
         return result;

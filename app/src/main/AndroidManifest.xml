@@ -16,6 +16,7 @@
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
+            android:windowSoftInputMode="adjustResize"
             android:resizeableActivity="true"
             android:theme="@style/Theme.MesDepensesTelecom.NoActionBar"
             tools:targetApi="24">

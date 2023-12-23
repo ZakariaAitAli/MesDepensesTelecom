@@ -12,8 +12,8 @@ import retrofit2.Response;
 
 public class DatabaseManager {
 
-    private DatabaseHelper dbHelper;
-    private MySQLApi mySQLApi;
+    private final DatabaseHelper dbHelper;
+    private final MySQLApi mySQLApi;
 
     public DatabaseManager(Context context) {
         dbHelper = new DatabaseHelper(context);

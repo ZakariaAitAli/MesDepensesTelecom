@@ -23,4 +23,9 @@
     <string name="image_view_item_transform_content_description">Represents an image view in the
         item
     </string>
+    <string name="welcome_please_log_in">Welcome, please log in</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="not_yet_registered_signup">Not yet registered? Signup</string>
 </resources>

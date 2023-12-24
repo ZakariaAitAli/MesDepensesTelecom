@@ -40,6 +40,9 @@ jobs:
     needs: build
 
     steps:
+    - name: Set up Git
+      run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
+
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1

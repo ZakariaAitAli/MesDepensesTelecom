@@ -2,13 +2,19 @@ name: Android CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - "main"
+    tags:
+      - 'v*.*.*'
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - "main"
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -27,3 +33,17 @@ jobs:
 
     - name: Build with Gradle
       run: ./gradlew build
+
+  release:
+    runs-on: ubuntu-latest
+
+    needs: build
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4.1.1
+      
+    - name: Release Action
+      uses: unfor19/release-action@1.0.0
+      with:
+        gh-token: ${{ secrets.PAT_TOKEN }}

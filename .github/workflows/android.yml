@@ -43,17 +43,7 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v4.1.1
       
-    - name: Create Release
-      id: create_release
-      uses: BaharaJr/releases@v0.0.1
+    - name: Release Action
+      uses: unfor19/release-action@1.0.0
       with:
-        GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
-        APP_NAME: AndroidApp
-        
-    - name: Upload Release Asset
-      id: upload-release-asset
-      uses: sekwah41/upload-release-assets@v1.1.0
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: app/build/outputs/apk/release/app-release.apk
-        asset_name: app-release.apk
+        gh-token: ${{ secrets.PAT_TOKEN }}

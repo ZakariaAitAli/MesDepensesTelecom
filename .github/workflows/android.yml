@@ -40,16 +40,12 @@ jobs:
     needs: build
 
     steps:
-    - name: Set up Git
-      run: |
-        git -C $GITHUB_WORKSPACE fetch --prune --unshallow
-
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
       with:
-        tag_name: ${{ github.event.ref }}
-        release_name: Release ${{ github.event.ref }}
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
         body: |
           Changes in this release:
           - Add your release notes here

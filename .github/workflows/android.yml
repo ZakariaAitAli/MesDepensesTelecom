@@ -45,9 +45,10 @@ jobs:
       
     - name: Create Release
       id: create_release
-      uses: janryWang/github-tag-release@v0.0.3
+      uses: BaharaJr/releases@v0.0.1
       with:
-        github_token: ${{ secrets.PAT_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+        APP_NAME: AndroidApp
         
     - name: Upload Release Asset
       id: upload-release-asset

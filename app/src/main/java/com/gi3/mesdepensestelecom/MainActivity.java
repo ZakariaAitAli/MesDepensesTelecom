@@ -13,7 +13,6 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.gi3.mesdepensestelecom.database.sqlite.DatabaseManager;
 import com.gi3.mesdepensestelecom.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
@@ -31,21 +30,13 @@ public class MainActivity extends AppCompatActivity {
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Initialize DatabaseManager
-        DatabaseManager databaseManager = new DatabaseManager(this);
-
         // Set the toolbar as the action bar
         setSupportActionBar(binding.appBarMain.toolbar);
 
         // Set up a Floating Action Button (FAB) with a SnackBar
         if (binding.appBarMain.fab != null) {
-            databaseManager.open();
-
             binding.appBarMain.fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show());
-
-            // Don't forget to close the database when done
-            databaseManager.close();
         }
 
         // Find the NavHostFragment for navigation

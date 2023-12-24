@@ -47,6 +47,8 @@ jobs:
           - Add your release notes here
         draft: false
         prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Upload Release Asset
       id: upload-release-asset
@@ -56,5 +58,6 @@ jobs:
         asset_path: app/build/outputs/apk/release/app-release.apk
         asset_name: app-release.apk
         asset_content_type: application/vnd.android.package-archive
+        asset_label: Android APK
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

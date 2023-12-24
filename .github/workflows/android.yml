@@ -44,7 +44,7 @@ jobs:
       id: create_release
       uses: janryWang/github-tag-release@v0.0.3
       with:
-        github_token:: ${{ secrets.PAT_TOKEN }}
+        github_token: ${{ secrets.PAT_TOKEN }}
         
     - name: Upload Release Asset
       id: upload-release-asset

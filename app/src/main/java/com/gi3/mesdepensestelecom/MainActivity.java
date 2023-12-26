@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navigationView = binding.navView;
         if (navigationView != null) {
             mAppBarConfiguration = new AppBarConfiguration.Builder(
-                    R.id.nav_transform, R.id.nav_reflow, R.id.nav_slideshow, R.id.nav_settings, R.id.nav_login, R.id.nav_register)
+                    R.id.nav_transform, R.id.nav_reflow, R.id.nav_slideshow, R.id.nav_settings, R.id.nav_login, R.id.nav_register, R.id.nav_logout)
                     .setOpenableLayout(binding.drawerLayout)
                     .build();
             NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = binding.appBarMain.contentMain.bottomNavView;
         if (bottomNavigationView != null) {
             mAppBarConfiguration = new AppBarConfiguration.Builder(
-                    R.id.nav_transform, R.id.nav_reflow, R.id.nav_slideshow, R.id.nav_login, R.id.nav_register)
+                    R.id.nav_transform, R.id.nav_reflow, R.id.nav_slideshow, R.id.nav_login, R.id.nav_register, R.id.nav_logout)
                     .build();
             NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
             NavigationUI.setupWithNavController(bottomNavigationView, navController);
@@ -92,10 +92,32 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         boolean result = super.onCreateOptionsMenu(menu);
         NavigationView navView = findViewById(R.id.nav_view);
-        if (navView == null && mAppBarConfiguration != null && !mAppBarConfiguration.getTopLevelDestinations().contains(R.id.nav_login) && !mAppBarConfiguration.getTopLevelDestinations().contains(R.id.nav_register)) {
-            getMenuInflater().inflate(R.menu.overflow, menu);
+
+        if (navView == null && mAppBarConfiguration != null) {
+            // Check the destination ID inside the destination changed listener
+            NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+            boolean isLoginOrRegisterDestination = isLoginOrRegisterDestination(navController.getCurrentDestination().getId());
+
+            // Check if the current destination is login or register
+            if (!isLoginOrRegisterDestination) {
+                getMenuInflater().inflate(R.menu.overflow, menu);
+            }
+        } else if (navView != null && mAppBarConfiguration != null) {
+            // Check the destination ID inside the destination changed listener
+            NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+            boolean isLoginOrRegisterDestination = isLoginOrRegisterDestination(navController.getCurrentDestination().getId());
+
+            // Check if the current destination is login or register
+            if (!isLoginOrRegisterDestination) {
+                getMenuInflater().inflate(R.menu.overflow, menu);
+            }
         }
         return result;
+    }
+
+    // Helper method to check if the current destination is login or register
+    private boolean isLoginOrRegisterDestination(int destinationId) {
+        return destinationId == R.id.nav_login || destinationId == R.id.nav_register;
     }
 
     // Handle item selection from the overflow menu
@@ -104,6 +126,10 @@ public class MainActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.nav_settings) {
             NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
             navController.navigate(R.id.nav_settings);
+        }
+        if (item.getItemId() == R.id.nav_logout) {
+            NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+            navController.navigate(R.id.nav_login);
         }
         return super.onOptionsItemSelected(item);
     }

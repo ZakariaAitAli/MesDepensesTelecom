@@ -1,9 +1,8 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:gravity="center"
+    android:orientation="vertical"
     android:padding="16dp">
 
     <TextView
@@ -18,43 +17,43 @@
         android:id="@+id/editTextUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:autofillHints="@string/username"
         android:drawableStart="@drawable/baseline_person_24"
         android:drawablePadding="8dp"
         android:hint="@string/username"
-        android:minHeight="48dp"
-        android:autofillHints="@string/username"
-        android:inputType="" />
+        android:inputType=""
+        android:minHeight="48dp" />
 
     <EditText
         android:id="@+id/editTextPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
+        android:autofillHints="@string/password"
         android:drawableStart="@drawable/baseline_lock_24"
         android:drawablePadding="8dp"
         android:hint="@string/password"
         android:inputType="textPassword"
-        android:minHeight="48dp"
-        android:autofillHints="@string/password" />
+        android:minHeight="48dp" />
 
     <EditText
         android:id="@+id/editTextConfirmPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
+        android:autofillHints="@string/confirm_password"
         android:drawableStart="@drawable/baseline_lock_open_24"
         android:drawablePadding="8dp"
         android:hint="@string/confirm_password"
         android:inputType="textPassword"
-        android:minHeight="48dp"
-        android:autofillHints="@string/confirm_password" />
+        android:minHeight="48dp" />
 
     <Button
         android:id="@+id/buttonRegister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="@string/menu_register"/>
+        android:text="@string/menu_register" />
 
     <TextView
         android:id="@+id/loginRedirectText"

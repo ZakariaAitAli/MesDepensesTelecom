@@ -37,7 +37,7 @@ public class LogoutFragment extends Fragment {
             // Navigate back to the login screen
             Navigation.findNavController(view).navigate(R.id.nav_login);
         });
-        
+
         return root;
     }
 

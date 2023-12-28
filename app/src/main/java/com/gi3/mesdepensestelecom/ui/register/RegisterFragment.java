@@ -42,10 +42,8 @@ public class RegisterFragment extends Fragment {
         registerButton.setOnClickListener(v -> attemptRegister());
 
         // Set an OnClickListener to navigate to the login fragment
-        loginRedirectText.setOnClickListener(v -> {
-            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
-                    .navigate(R.id.nav_login);
-        });
+        loginRedirectText.setOnClickListener(v -> Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
+                .navigate(R.id.nav_login));
 
         return root;
     }

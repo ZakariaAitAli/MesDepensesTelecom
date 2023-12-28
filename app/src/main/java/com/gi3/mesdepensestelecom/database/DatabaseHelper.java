@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String databaseName = "Depense.db";
     public DatabaseHelper(@Nullable Context context) {
-        super(context, "Depense.db", null, 1);
+        super(context, databaseName, null, 1);
     }
     @Override
     public void onCreate(SQLiteDatabase MyDatabase) {
@@ -26,28 +26,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put("username", username);
         contentValues.put("password", password);
         long result = MyDatabase.insert("users", null, contentValues);
-        if (result == -1) {
-            return false;
-        } else {
-            return true;
-        }
+        return result != -1;
     }
-    public Boolean checkUsername(String username){
-        SQLiteDatabase MyDatabase = this.getWritableDatabase();
-        Cursor cursor = MyDatabase.rawQuery("Select * from users where username = ?", new String[]{username});
-        if(cursor.getCount() > 0) {
-            return true;
-        }else {
-            return false;
-        }
+    public Boolean checkUsername(String username) {
+        SQLiteDatabase myDatabase = this.getWritableDatabase();
+        Cursor cursor = myDatabase.rawQuery("SELECT * FROM users WHERE username = ?", new String[]{username});
+        boolean usernameExists = cursor.getCount() > 0;
+        cursor.close();
+
+        return usernameExists;
     }
-    public Boolean checkUsernamePassword(String username, String password){
-        SQLiteDatabase MyDatabase = this.getWritableDatabase();
-        Cursor cursor = MyDatabase.rawQuery("Select * from users where username = ? and password = ?", new String[]{username, password});
-        if (cursor.getCount() > 0) {
-            return true;
-        }else {
-            return false;
-        }
+    public Boolean checkUsernamePassword(String username, String password) {
+        SQLiteDatabase myDatabase = this.getWritableDatabase();
+        Cursor cursor = myDatabase.rawQuery("SELECT * FROM users WHERE username = ? AND password = ?", new String[]{username, password});
+        boolean usernamePasswordMatch = cursor.getCount() > 0;
+        cursor.close();
+        return usernamePasswordMatch;
     }
+
 }

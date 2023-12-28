@@ -18,6 +18,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -96,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
         if (navView == null && mAppBarConfiguration != null) {
             // Check the destination ID inside the destination changed listener
             NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-            boolean isLoginOrRegisterDestination = isLoginOrRegisterDestination(navController.getCurrentDestination().getId());
+            boolean isLoginOrRegisterDestination = isLoginOrRegisterDestination(Objects.requireNonNull(navController.getCurrentDestination()).getId());
 
             // Check if the current destination is login or register
             if (!isLoginOrRegisterDestination) {
@@ -105,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         } else if (navView != null && mAppBarConfiguration != null) {
             // Check the destination ID inside the destination changed listener
             NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-            boolean isLoginOrRegisterDestination = isLoginOrRegisterDestination(navController.getCurrentDestination().getId());
+            boolean isLoginOrRegisterDestination = isLoginOrRegisterDestination(Objects.requireNonNull(navController.getCurrentDestination()).getId());
 
             // Check if the current destination is login or register
             if (!isLoginOrRegisterDestination) {

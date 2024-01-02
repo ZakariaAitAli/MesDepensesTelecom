@@ -15,15 +15,17 @@ import androidx.navigation.Navigation;
 
 import com.gi3.mesdepensestelecom.MainActivity;
 import com.gi3.mesdepensestelecom.R;
-import com.gi3.mesdepensestelecom.database.DatabaseHelper;
+import com.gi3.mesdepensestelecom.Models.User;
+import com.gi3.mesdepensestelecom.database.UserRepository;
 
 public class RegisterFragment extends Fragment {
 
     private EditText usernameEditText;
     private EditText passwordEditText;
+    private EditText confirmPasswordEditText;
 
-    // Instantiate DatabaseHelper
-    private DatabaseHelper databaseHelper;
+    // Instantiate UserRepository
+    private UserRepository userRepository;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -33,11 +35,13 @@ public class RegisterFragment extends Fragment {
 
         usernameEditText = root.findViewById(R.id.editTextUsername);
         passwordEditText = root.findViewById(R.id.editTextPassword);
+        confirmPasswordEditText = root.findViewById(R.id.editTextConfirmPassword);
+
         Button registerButton = root.findViewById(R.id.buttonRegister);
         View loginRedirectText = root.findViewById(R.id.loginRedirectText);
 
-        // Instantiate DatabaseHelper
-        databaseHelper = new DatabaseHelper(requireContext());
+        // Instantiate UserRepository
+        userRepository = new UserRepository(requireContext());
 
         registerButton.setOnClickListener(v -> attemptRegister());
 
@@ -51,16 +55,26 @@ public class RegisterFragment extends Fragment {
     private void attemptRegister() {
         String username = usernameEditText.getText().toString();
         String password = passwordEditText.getText().toString();
+        String confirmPassword = confirmPasswordEditText.getText().toString();
 
-        if (username.isEmpty() || password.isEmpty()) {
+        if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
             showToast("All fields are mandatory");
+        } else if (!confirmPassword.equals(password)) {
+            showToast("Passwords do not match");
+//        } else if (password.length() < 6) {
+//            showToast("Password must be at least 6 characters");
         } else {
-            boolean checkUserEmail = databaseHelper.checkUsername(username);
+            // Create a User object with the entered username and password
+            User user = new User();
+            user.username = username;
+            user.password = password;
 
-            if (!checkUserEmail) {
-                boolean insert = databaseHelper.insertData(username, password);
+            boolean checkUserExists = userRepository.checkUsername(username);
 
-                if (insert) {
+            if (!checkUserExists) {
+                long insertResult = userRepository.addUser(user);
+
+                if (insertResult != -1) {
                     showToast("Signup Successfully!");
                     // Navigate to the home activity or the next screen after registration
                     startActivity(new Intent(getActivity(), MainActivity.class));

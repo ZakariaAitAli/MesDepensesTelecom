@@ -13,15 +13,16 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.gi3.mesdepensestelecom.R;
-import com.gi3.mesdepensestelecom.database.DatabaseHelper;
+import com.gi3.mesdepensestelecom.Models.User;
+import com.gi3.mesdepensestelecom.database.UserRepository;
 
 public class LoginFragment extends Fragment {
 
     private EditText usernameEditText;
     private EditText passwordEditText;
 
-    // Instantiate DatabaseHelper
-    private DatabaseHelper databaseHelper;
+    // Instantiate UserRepository
+    private UserRepository userRepository;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -34,8 +35,8 @@ public class LoginFragment extends Fragment {
         Button loginButton = root.findViewById(R.id.buttonLogin);
         View signupRedirectText = root.findViewById(R.id.signupRedirectText);
 
-        // Instantiate DatabaseHelper
-        databaseHelper = new DatabaseHelper(requireContext());
+        // Instantiate UserRepository
+        userRepository = new UserRepository(requireContext());
 
         loginButton.setOnClickListener(v -> attemptLogin());
 
@@ -52,8 +53,13 @@ public class LoginFragment extends Fragment {
         String username = usernameEditText.getText().toString();
         String password = passwordEditText.getText().toString();
 
-        // Check if the email and password match in the SQLite database
-        if (databaseHelper.checkUsernamePassword(username, password)) {
+        // Create a User object with the entered username and password
+        User user = new User();
+        user.username = username;
+        user.password = password;
+
+        // Check if the username and password match in the SQLite database
+        if (userRepository.checkUsernamePassword(user)) {
             // Navigate to the nav_transform fragment after successful login
             Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
                     .navigate(R.id.nav_transform);

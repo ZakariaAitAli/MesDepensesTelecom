@@ -10,24 +10,23 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.gi3.mesdepensestelecom.R;
+import com.gi3.mesdepensestelecom.database.DatabaseHelper;
 import com.gi3.mesdepensestelecom.databinding.FragmentReflowBinding;
 
 public class ReflowFragment extends Fragment {
 
     private FragmentReflowBinding binding;
+    private DatabaseHelper databaseHelper;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        ReflowViewModel reflowViewModel =
-                new ViewModelProvider(this).get(ReflowViewModel.class);
-
-        binding = FragmentReflowBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-
-        final TextView textView = binding.textReflow;
-        reflowViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        View root = inflater.inflate(R.layout.fragment_reflow, container, false);
+        databaseHelper = new DatabaseHelper(requireContext());
         return root;
     }
+
+
 
     @Override
     public void onDestroyView() {

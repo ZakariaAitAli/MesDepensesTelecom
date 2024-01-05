@@ -5,10 +5,15 @@ import java.util.Date;
 public class Abonnement {
 
     public int Id;
-    public Date DateDebut ;
-    public Date dateFin ;
-    public float somme;
+    public String DateDebut ;
+    public String dateFin ;
+    public float prix;
     public int operateur ;
     public int idUser ;
     public int typeAbonnement;
+
+
+
+
+
 }

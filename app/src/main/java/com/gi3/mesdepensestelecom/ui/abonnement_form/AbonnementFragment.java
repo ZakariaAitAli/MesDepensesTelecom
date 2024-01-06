@@ -91,12 +91,9 @@ public class AbonnementFragment extends Fragment {
         });
 
         // Set click listener for the Submit button
-        buttonSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Call a method to handle the insertion of data
-                insertAbonnementData();
-            }
+        buttonSubmit.setOnClickListener(view1 -> {
+            // Call a method to handle the insertion of data
+            insertAbonnementData();
         });
 
         return view;

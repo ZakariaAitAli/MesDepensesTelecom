@@ -6,11 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.gi3.mesdepensestelecom.Models.User;
-
 import com.gi3.mesdepensestelecom.Models.OperateurEnum;
 import com.gi3.mesdepensestelecom.Models.TypeAbonnement;
-
+import com.gi3.mesdepensestelecom.Models.User;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String databaseName = "Depense.db";

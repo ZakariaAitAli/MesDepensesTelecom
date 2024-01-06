@@ -5,7 +5,7 @@ import java.util.Date;
 public class Supplement {
     public int id ;
     public int idAbonnement ;
-    public float somme ;
-    public Date date ;
+    public float prix ;
+    public String date ;
 
 }

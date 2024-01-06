@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="options_array">
+        <item>Fibre Optique</item>
+        <item>WIFI</item>
+        <item>Mobile Appel</item>
+        <item>Fixe</item>
+        <item>Mobile Internet</item>
+    </string-array>
+</resources>

@@ -1,7 +1,7 @@
 package com.gi3.mesdepensestelecom.Models;
 
 public class TypeAbonnement {
-    enum Enum {
+   public enum Enum {
         fibreOptique,
         WIFI,
         MobileAppel,

@@ -2,10 +2,13 @@ package com.gi3.mesdepensestelecom.Models;
 
 public class OperateurEnum {
 
-   enum Enum {
+   public enum Enum {
        IAM ,
        INWI,
        ORANGE
 
    }
+
+
+
 }

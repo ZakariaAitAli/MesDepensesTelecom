@@ -1,5 +1,6 @@
 package com.gi3.mesdepensestelecom;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,6 +26,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        findViewById(R.id.buttonBarChart).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                startActivity(new Intent(getApplicationContext(), BarChartActivity.class));
+            }
+        });
+
 
         // Inflating the layout using View Binding
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
@@ -115,4 +123,7 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+
+
 }

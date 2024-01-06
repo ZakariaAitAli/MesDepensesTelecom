@@ -33,4 +33,7 @@
     <string name="not_yet_registered_signup">Not yet registered? Signup</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="already_registered_login">Already registered? Login</string>
+    <string name="bar_chart">Bar Chart</string>
+    <string name="pie_chart">Pie Chart</string>
+    <string name="radar_chart">Radar Chart</string>
 </resources>

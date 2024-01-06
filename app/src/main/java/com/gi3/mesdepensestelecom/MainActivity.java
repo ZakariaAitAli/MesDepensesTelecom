@@ -23,6 +23,7 @@ import com.google.android.material.snackbar.Snackbar;
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+    DatabaseHelper databaseHelper ;
 
     DatabaseHelper databaseHelper ;
     @Override
@@ -38,6 +39,11 @@ public class MainActivity extends AppCompatActivity {
         // Inflating the layout using View Binding
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        //MIGRATIONS:
+        databaseHelper = new DatabaseHelper(this);
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        // databaseHelper.onUpgrade(db,0,0);
+        databaseHelper.onCreate(db);
 
         // Set the toolbar as the action bar
         setSupportActionBar(binding.appBarMain.toolbar);

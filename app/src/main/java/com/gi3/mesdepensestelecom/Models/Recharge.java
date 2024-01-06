@@ -6,7 +6,7 @@ public class Recharge {
 
     public int Id;
     public int idUser;
-    public float somme;
-    public Date date;
+    public float prix;
+    public String date;
 
 }

@@ -8,7 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,6 +36,8 @@ public class AbonnementFragment extends Fragment {
     private HashMap<Integer, String> TypeAbonnementHashMap;
     private Spinner spinnerType;
     private Spinner spinnerOperator;
+    private EditText editTextAmount;
+    private Button buttonSubmit;
     private EditText editTextAmount;
     private Button buttonSubmit;
 
@@ -77,6 +81,24 @@ public class AbonnementFragment extends Fragment {
             insertAbonnementData();
         });
 
+        // Set click listener for the Submit button
+        buttonSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Call a method to handle the insertion of data
+                insertAbonnementData();
+            }
+        });
+
+        // Set click listener for the Submit button
+        buttonSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Call a method to handle the insertion of data
+                insertAbonnementData();
+            }
+        });
+
         return view;
     }
 
@@ -97,6 +119,7 @@ public class AbonnementFragment extends Fragment {
 
         spinnerType.setAdapter(adapter);
     }
+
 
     private void showDatePickerDialog(final Button targetButton) {
         int year = calendar.get(Calendar.YEAR);
@@ -160,3 +183,37 @@ public class AbonnementFragment extends Fragment {
         return -1;
     }
 }
+
+    // Method to handle the insertion of data
+    private void insertAbonnementData() {
+        // Retrieve data from UI elements
+        String startDate = btnStartDate.getText().toString();
+        String endDate = btnEndDate.getText().toString();
+        String prix = editTextAmount.getText().toString();
+
+        // Retrieve selected items as strings from spinners
+        String selectedOperator = spinnerOperator.getSelectedItem().toString();
+        String selectedTypeAbonnement = spinnerType.getSelectedItem().toString();
+
+        // Find the corresponding keys (numbers) from the HashMaps
+        int operator = getKeyByValue(operatorHashMap, selectedOperator);
+        int typeAbonnement = getKeyByValue(TypeAbonnementHashMap, selectedTypeAbonnement);
+
+        // Assuming you have a user ID, replace "yourUserId" with the actual user ID
+        int userId = 1;
+
+        // Create an Abonnement object with the retrieved data
+        Abonnement abonnement = new Abonnement(startDate, endDate, Float.parseFloat(prix), operator, userId, typeAbonnement);
+
+        // Insert the Abonnement data into the database
+        long result = new AbonnementRepository(requireContext()).insertAbonnement(abonnement);
+
+        // Check if the insertion was successful
+        if (result != -1) {
+            // Data inserted successfully, you can show a success message or perform any other actions
+            Toast.makeText(requireContext(), "Data inserted successfully", Toast.LENGTH_SHORT).show();
+        } else {
+            // Failed to insert data, you can show an error message or perform any other actions
+            Toast.makeText(requireContext(), "Failed to insert data", Toast.LENGTH_SHORT).show();
+        }
+    }

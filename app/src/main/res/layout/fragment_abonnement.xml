@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical"
     android:padding="25dp"
     tools:context=".ui.abonnement_form.AbonnementFragment">
@@ -14,56 +13,51 @@
         android:text="@string/Enter_the_information_of_your_abonnement"
         android:textSize="18sp"
         android:textStyle="bold" />
-
     <Spinner
         android:id="@+id/spinnerOperator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
         android:prompt="@string/select_operator" />
-
-
     <Spinner
         android:id="@+id/spinnerType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
         android:prompt="@string/select_operator" />
-
     <Button
         android:id="@+id/btnStartDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/spinnerOperator"
         android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
         android:text="@string/select_start_date" />
-
 
     <Button
         android:id="@+id/btnEndDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/btnStartDate"
-        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
         android:text="@string/select_end_date" />
 
     <EditText
         android:id="@+id/editTextAmount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawablePadding="8dp"
-        android:layout_below="@id/btnEndDate"
-        android:inputType="numberDecimal"
         android:layout_marginTop="15dp"
+        android:inputType="phone"
         android:hint="@string/amount" />
 
+
     <Button
+
         android:id="@+id/buttonSubmit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editTextAmount"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="16dp"
         android:text="@string/submit" />
-
 
 </LinearLayout>

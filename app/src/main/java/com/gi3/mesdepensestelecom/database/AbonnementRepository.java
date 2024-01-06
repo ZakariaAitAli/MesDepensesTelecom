@@ -129,37 +129,6 @@ public class AbonnementRepository extends SQLiteOpenHelper {
     }
 
 
-    public List<String> getAllOperators() {
-        SQLiteDatabase db = databaseHelper.getReadableDatabase();
-        List<String> operators = new ArrayList<>();
-
-        // Query to get distinct operator names from "operateurs" table
-        String query = "SELECT DISTINCT op_name FROM operateurs";
-        Cursor cursor = db.rawQuery(query, null);
-
-        // Check if the cursor has data
-        if (cursor != null && cursor.moveToFirst()) {
-            // Get the column index for "op_name"
-            int columnIndex = cursor.getColumnIndex("op_name");
-
-            // Iterate through the cursor to retrieve operator names
-            do {
-                // Check if the column index is valid
-                if (columnIndex >= 0) {
-                    String operatorName = cursor.getString(columnIndex);
-                    operators.add(operatorName);
-                }
-            } while (cursor.moveToNext());
-        }
-
-        // Close cursor and database
-        if (cursor != null) {
-            cursor.close();
-        }
-        db.close();
-
-        return operators;
-    }
 }
 
 

@@ -1,4 +1,4 @@
-package com.gi3.mesdepensestelecom.ui.register;
+package com.gi3.mesdepensestelecom.ui.register2;
 
 import android.content.Intent;
 import android.os.Bundle;

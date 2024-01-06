@@ -12,7 +12,7 @@ import java.io.IOException;
  * Class that handles authentication w/ login credentials and retrieves user information.
  */
 public class LoginDataSource {
-    private DatabaseHelper databaseHelper;
+    private final DatabaseHelper databaseHelper;
 
     public LoginDataSource(DatabaseHelper databaseHelper) {
         this.databaseHelper = databaseHelper;
@@ -47,6 +47,7 @@ public class LoginDataSource {
 
     public void logout() {
         // TODO: revoke authentication
+
 
     }
 }

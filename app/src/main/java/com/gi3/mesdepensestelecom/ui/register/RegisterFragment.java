@@ -1,4 +1,4 @@
-package com.gi3.mesdepensestelecom.ui.register2;
+package com.gi3.mesdepensestelecom.ui.register;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -33,12 +33,12 @@ public class RegisterFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_register, container, false);
 
-        usernameEditText = root.findViewById(R.id.editTextUsername);
-        passwordEditText = root.findViewById(R.id.editTextPassword);
-        confirmPasswordEditText = root.findViewById(R.id.editTextConfirmPassword);
+        usernameEditText = root.findViewById(R.id.username);
+        passwordEditText = root.findViewById(R.id.password);
+        confirmPasswordEditText = root.findViewById(R.id.confirm_password);
 
-        Button registerButton = root.findViewById(R.id.buttonRegister);
-        View loginRedirectText = root.findViewById(R.id.loginRedirectText);
+        Button registerButton = root.findViewById(R.id.register);
+        View loginRedirectText = root.findViewById(R.id.loginRedirect);
 
         // Instantiate UserRepository
         userRepository = new UserRepository(requireContext());

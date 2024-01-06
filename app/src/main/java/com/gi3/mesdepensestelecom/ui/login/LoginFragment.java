@@ -20,8 +20,12 @@ import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.gi3.mesdepensestelecom.R;
+import com.gi3.mesdepensestelecom.data.LoginDataSource;
+import com.gi3.mesdepensestelecom.data.LoginRepository;
+import com.gi3.mesdepensestelecom.database.DatabaseHelper;
 import com.gi3.mesdepensestelecom.databinding.FragmentLoginBinding;
 
 public class LoginFragment extends Fragment {
@@ -43,7 +47,11 @@ public class LoginFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
+
+        DatabaseHelper databaseHelper = new DatabaseHelper(getContext());
+        LoginRepository loginRepository = LoginRepository.getInstance(new LoginDataSource(databaseHelper));
+
+        loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory(loginRepository))
                 .get(LoginViewModel.class);
 
         final EditText usernameEditText = binding.username;
@@ -129,6 +137,7 @@ public class LoginFragment extends Fragment {
         // TODO : initiate successful logged in experience
         if (getContext() != null && getContext().getApplicationContext() != null) {
             Toast.makeText(getContext().getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
+            NavHostFragment.findNavController(this).navigate(R.id.nav_transform);
         }
     }
 

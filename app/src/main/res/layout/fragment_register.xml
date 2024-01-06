@@ -48,6 +48,7 @@
         android:inputType="textPassword"
         android:minHeight="48dp" />
 
+
     <Button
         android:id="@+id/buttonRegister"
         android:layout_width="match_parent"

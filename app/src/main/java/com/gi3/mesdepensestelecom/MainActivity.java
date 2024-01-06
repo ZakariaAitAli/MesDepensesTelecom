@@ -14,6 +14,8 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.gi3.mesdepensestelecom.Models.TypeAbonnement;
+import com.gi3.mesdepensestelecom.database.AbonnementRepository;
 import com.gi3.mesdepensestelecom.database.DatabaseHelper;
 import com.gi3.mesdepensestelecom.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -95,6 +97,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+        AbonnementRepository abo = new AbonnementRepository(this) ;
+        abo.GetAbonnements(TypeAbonnement.Enum.fibreOptique.toString()) ;
     }
 
     // Inflate the overflow menu

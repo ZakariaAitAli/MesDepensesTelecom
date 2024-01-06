@@ -14,13 +14,24 @@ import java.util.List;
 import com.gi3.mesdepensestelecom.Models.Abonnement;
 import com.gi3.mesdepensestelecom.Models.TypeAbonnement;
 
+
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.text.ParseException;
+import java.util.Calendar;
+
+import java.util.Locale;
+
+
+
 
 public class AbonnementRepository extends SQLiteOpenHelper {
-    private DatabaseHelper databaseHelper;
     public static final String databaseName = "Depense.db";
-
+    DatabaseHelper databaseHelper;
     SQLiteDatabase db;
 
 
@@ -29,6 +40,7 @@ public class AbonnementRepository extends SQLiteOpenHelper {
         databaseHelper = new DatabaseHelper(context);
         db = databaseHelper.getWritableDatabase();
     }
+
 
 
     public long insertAbonnement(Abonnement abonnement) {
@@ -78,12 +90,17 @@ public class AbonnementRepository extends SQLiteOpenHelper {
     }
 
 //REMEMBER TO ADD DATE
-    private void GetAbonnements(String typeAbo) {
+
+    //REMEMBER TO ADD DATE
+    public void GetAbonnements(String typeAbo) {
+
 
         List<Abonnement> abonnementsList = new ArrayList<>();
+        HashMap<String, String> AbonnementsDic = new HashMap<>();
 
-        int typeAboEnum = TypeAbonnement.Enum.valueOf(typeAbo).ordinal() ;
-        Cursor cursor = db.rawQuery("SELECT * FROM abonnements WHERE typeAbonnement=? ", new String[]{typeAbo});
+        String typeAboEnum = Integer.toString(TypeAbonnement.Enum.valueOf(typeAbo).ordinal());
+
+        Cursor cursor = db.rawQuery("SELECT * FROM abonnements WHERE typeAbonnement=? ", new String[]{typeAboEnum});
 
         try {
             int idIndex = cursor.getColumnIndex("id");
@@ -109,22 +126,44 @@ public class AbonnementRepository extends SQLiteOpenHelper {
                     abonnementsList.add(abonnement);
                 }
             }
+
+            for (Abonnement item : abonnementsList) {
+
+
+            }
         } finally {
             cursor.close();
         }
 
     }
 
+    public int getMonthDifference(String dateDebut, String dateFin) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
 
+        try {
+            Date startDate = dateFormat.parse(dateDebut);
+            Date endDate = dateFormat.parse(dateFin);
 
+            Calendar startCalendar = Calendar.getInstance();
+            startCalendar.setTime(startDate);
 
-    private boolean isTableExists(SQLiteDatabase db, String tableName) {
-        Cursor cursor = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name=?", new String[]{tableName});
-        boolean tableExists = cursor.getCount() > 0;
-        cursor.close();
-        return tableExists;
+            Calendar endCalendar = Calendar.getInstance();
+            endCalendar.setTime(endDate);
+
+            int diffYear = endCalendar.get(Calendar.YEAR) - startCalendar.get(Calendar.YEAR);
+            int diffMonth = endCalendar.get(Calendar.MONTH) - startCalendar.get(Calendar.MONTH);
+
+            if (endCalendar.get(Calendar.DAY_OF_MONTH) < startCalendar.get(Calendar.DAY_OF_MONTH)) {
+                diffMonth--;
+            }
+
+            return Math.abs(diffYear * 12 + diffMonth);
+        } catch (ParseException e) {
+            e.printStackTrace(); // Handle the parsing exception according to your requirements
+            return -1; // Return an error code or handle the error as needed
+        }
+
     }
-
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {

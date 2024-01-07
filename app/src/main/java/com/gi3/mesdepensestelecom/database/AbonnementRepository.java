@@ -27,9 +27,8 @@ public class AbonnementRepository extends SQLiteOpenHelper {
     public AbonnementRepository(@Nullable Context context) {
         super(context, databaseName, null, 1);
         databaseHelper = new DatabaseHelper(context);
-        db= databaseHelper.getWritableDatabase();
+        db = databaseHelper.getWritableDatabase();
     }
-
 
 
     public long insertAbonnement(Abonnement abonnement) {
@@ -49,9 +48,34 @@ public class AbonnementRepository extends SQLiteOpenHelper {
 
     }
 
+    public List<Abonnement> getAllAbonnementsByUserId(int userId) {
+        List<Abonnement> abonnements = new ArrayList<>();
+        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+
+        String[] columns = {"id", "dateDebut", "dateFin", "prix", "typeAbonnement", "operateur"};
+        String selection = "userId = ?";
+        String[] selectionArgs = {String.valueOf(userId)};
+
+        Cursor cursor = db.query("abonnements", columns, selection, selectionArgs, null, null, null);
+
+        while (cursor.moveToNext()) {
+            Abonnement abonnement = new Abonnement();
 
 
+            abonnement.Id =cursor.getInt(0);
+            abonnement.dateDebut =cursor.getString(1);
+            abonnement.dateFin =cursor.getString(2);
+            abonnement.prix=cursor.getFloat(3);
+            abonnement.typeAbonnement=cursor.getInt(4);
+            abonnement.operateur=cursor.getInt(5);
 
+            abonnements.add(abonnement);
+        }
+
+        cursor.close();
+        db.close();
+        return abonnements;
+    }
 
 //REMEMBER TO ADD DATE
     private void GetAbonnements(String typeAbo) {
@@ -72,7 +96,7 @@ public class AbonnementRepository extends SQLiteOpenHelper {
 
             while (cursor.moveToNext()) {
                 if (idIndex != -1) {
-                    Abonnement abonnement = new Abonnement ();
+                    Abonnement abonnement = new Abonnement();
 
                     abonnement.Id = cursor.getInt(idIndex);
                     abonnement.dateDebut = cursor.getString(dateDebutIndex);
@@ -102,22 +126,6 @@ public class AbonnementRepository extends SQLiteOpenHelper {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
@@ -127,6 +135,8 @@ public class AbonnementRepository extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
     }
+
+
 
 
 }

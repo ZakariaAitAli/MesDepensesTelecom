@@ -6,6 +6,7 @@ public class Supplement {
     public int id ;
     public int idAbonnement ;
     public float prix ;
+
     public String date ;
 
 }

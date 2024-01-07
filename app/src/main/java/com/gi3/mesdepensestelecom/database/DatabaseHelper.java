@@ -30,10 +30,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             MyDatabase.execSQL("CREATE TABLE abonnements (" + "id INTEGER PRIMARY KEY," + "dateDebut String," + "dateFin String," + "prix FLOAT," + "typeAbonnement INTEGER," + "operateur INTEGER," + "userId INTEGER," + "FOREIGN KEY(userId) REFERENCES users(id))");
             insertAbonnement(MyDatabase, "01/01/2023", "31/12/2023", 100.0f, TypeAbonnement.Enum.fibreOptique.ordinal(), OperateurEnum.Enum.IAM.ordinal(), 1);
             insertAbonnement(MyDatabase,"01/01/2024", "31/12/2024", 150.0f, TypeAbonnement.Enum.WIFI.ordinal(), OperateurEnum.Enum.INWI.ordinal(), 2);
-<<<<<<< HEAD
-=======
 
->>>>>>> 522ebb8 (DashboardFinal)
 
         }
 

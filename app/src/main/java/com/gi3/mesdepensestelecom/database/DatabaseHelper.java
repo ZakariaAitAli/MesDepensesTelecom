@@ -37,7 +37,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
         if (!isTableExists(MyDatabase, "supplements")) {
-            MyDatabase.execSQL("create Table supplements(" + " Id INTEGER primary key, " + "date String ," + "prix float, "+ "abonnementId INTEGER," + " FOREIGN KEY(abonnementId) REFERENCES abonnements(id) )");
+                 MyDatabase.execSQL("create Table supplements(" + " Id INTEGER primary key, " + "date String ," + "prix float, "+ "abonnementId INTEGER," + " FOREIGN KEY(abonnementId) REFERENCES abonnements(id) )");
         }
 
         if (!isTableExists(MyDatabase, "recharges")) {

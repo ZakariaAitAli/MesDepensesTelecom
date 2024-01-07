@@ -46,5 +46,10 @@
         android:name="com.gi3.mesdepensestelecom.ui.logout.LogoutFragment"
         android:label="@string/menu_logout"
         tools:layout="@layout/fragment_logout" />
+    <fragment
+        android:id="@+id/nav_form_abonnement"
+        android:name="com.gi3.mesdepensestelecom.ui.abonnement_form.AbonnementFragment"
+        android:label="@string/menu_logout"
+        tools:layout="@layout/fragment_abonnement" />
 
 </navigation>

@@ -23,8 +23,9 @@ import com.google.android.material.snackbar.Snackbar;
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-
     DatabaseHelper databaseHelper ;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
         // Inflating the layout using View Binding
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+
 
         // Set the toolbar as the action bar
         setSupportActionBar(binding.appBarMain.toolbar);

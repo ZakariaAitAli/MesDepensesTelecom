@@ -1,0 +1,49 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:gravity="center"
+android:orientation="vertical"
+android:padding="25dp"
+tools:context=".ui.recharge.RechargeSimpleFragment">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="@string/title_rsimple"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <Spinner
+        android:id="@+id/spinnerOperator"
+        android:layout_width="325dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:minWidth="200dp"
+        android:minHeight="48dp" />
+
+    <EditText
+        android:id="@+id/editTextAmount"
+        android:layout_width="317dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="16dp"
+        android:hint="Entrez le montant en DH"
+        android:inputType="number"
+        android:minHeight="48dp"
+        android:padding="8dp" />
+
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/spinnerOperator"
+        android:layout_marginTop="154dp"
+        android:background="@android:color/black"
+        android:text="Envoyer"
+        android:textColor="@android:color/white" />
+
+
+</LinearLayout>

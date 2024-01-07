@@ -29,7 +29,7 @@ public class LoginFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_login, container, false);
 
-        usernameEditText = root.findViewById(R.id.editTextUsername);
+            usernameEditText = root.findViewById(R.id.editTextUsername);
         passwordEditText = root.findViewById(R.id.editTextPassword);
         Button loginButton = root.findViewById(R.id.buttonLogin);
         View signupRedirectText = root.findViewById(R.id.signupRedirectText);

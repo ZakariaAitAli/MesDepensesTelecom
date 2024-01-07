@@ -35,6 +35,7 @@
     <string name="not_yet_registered_signup">Not yet registered? Signup</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="already_registered_login">Already registered? Login</string>
+
     <string name="Enter_the_information_of_your_abonnement">Enter the information of your abonnement</string>
     <string name="select_operator">Select Operator</string>
     <string name="select_start_date">Select Start Date</string>
@@ -42,4 +43,12 @@
     <string name="amount">Amount</string>
     <string name="select_contract_duration">Select Contract Duration</string>
     <string name="submit">Submit</string>
+
+    <string name="title_supplement">Ajoutez une recharge supplément pour l\'une de vos abonnements </string>
+    <string name="title_rsimple">Ajoutez une recharge simple</string>
+    <string name="menu_recharge">Recharge</string>
+
+
+
+
 </resources>

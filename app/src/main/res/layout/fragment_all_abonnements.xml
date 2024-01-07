@@ -4,16 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    android:padding="25dp"
+    android:padding="10dp"
     tools:context=".ui.ShowAbonnements.ShowAbonnementFragment">
 
     <ListView
         android:id="@+id/abonnementListView"
-        android:layout_width="match_parent"
+        android:layout_width="364dp"
         android:layout_height="match_parent"
+        android:layout_below="@+id/TitleListView"
+        android:clipToPadding="false"
         android:divider="@android:color/darker_gray"
-        android:dividerHeight="0.5dp"
-        android:padding="16dp"
-        android:clipToPadding="false"/>
+        android:dividerHeight="0.5dp" />
 
 </LinearLayout>

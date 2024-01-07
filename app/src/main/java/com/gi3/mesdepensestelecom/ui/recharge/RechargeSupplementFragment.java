@@ -1,22 +1,33 @@
 package com.gi3.mesdepensestelecom.ui.recharge;
 
 import static com.gi3.mesdepensestelecom.R.*;
+import static com.gi3.mesdepensestelecom.ui.abonnement_form.AbonnementFragment.getKeyByValue;
 
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.gi3.mesdepensestelecom.Models.Abonnement;
+import com.gi3.mesdepensestelecom.Models.Recharge;
+import com.gi3.mesdepensestelecom.Models.Supplement;
 import com.gi3.mesdepensestelecom.R;
 import com.gi3.mesdepensestelecom.database.RechargeRepository;
 import com.gi3.mesdepensestelecom.database.SupplementRepository;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +39,10 @@ import java.util.List;
  */
 public class RechargeSupplementFragment extends Fragment {
 
+    private Button btnSubmit;
+    private EditText editTextAmount;
+
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -37,8 +52,8 @@ public class RechargeSupplementFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private HashMap<Integer, String> TypeAbonnementHashMap;
     private Spinner spinnerAbonnement;
+    HashMap<Integer,String> abonnementHashMap ;
 
     public RechargeSupplementFragment() {
         // Required empty public constructor
@@ -72,27 +87,32 @@ public class RechargeSupplementFragment extends Fragment {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(layout.fragment_recharge_supplement, container, false) ;
-        TypeAbonnementHashMap = new HashMap<>();
-        TypeAbonnementHashMap.put(1, "Fibre Optique");
-        TypeAbonnementHashMap.put(2, "WIFI");
-        TypeAbonnementHashMap.put(3, "Mobile Appel");
-        TypeAbonnementHashMap.put(4, "Fixe");
-        TypeAbonnementHashMap.put(5, "Mobile Internet");
 
+        abonnementHashMap = new SupplementRepository(requireContext()).getAbonnementsMapByUserId(1);
 
         spinnerAbonnement = view.findViewById(id.spinnerAbonnement);
-        populateTypeAbonnementSpinner();
+        editTextAmount = view.findViewById(R.id.editTextAmount);
+        btnSubmit = view.findViewById(R.id.btnSubmit);
+
+        populateAbonnementSpinner();
+
+        btnSubmit.setOnClickListener(view1 -> {
+            // Call a method to handle the insertion of data
+            insertRechargeSupplementData();
+        });
         return view;
     }
 
-    private void populateTypeAbonnementSpinner(){
+    private void populateAbonnementSpinner(){
         // Ici je vais faire appel à une methode pour afficher la liste des abonnements de l'utilisateur avec id= id_session
-        HashMap<Integer,String> abonnementHashMap = new SupplementRepository(requireContext()).getAbonnementsMapByUserId(1);
         List<String> nameAbonnementList = new ArrayList<>(abonnementHashMap.values());
+
+        Log.d("AbonnementListSize", String.valueOf(nameAbonnementList.size()));
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, nameAbonnementList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -100,4 +120,36 @@ public class RechargeSupplementFragment extends Fragment {
         spinnerAbonnement.setAdapter(adapter);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void insertRechargeSupplementData() {
+        // Retrieve data from UI elements
+        String prix = editTextAmount.getText().toString();
+        String selectedAbonnement = spinnerAbonnement.getSelectedItem().toString();
+        LocalDateTime currentDateTime = LocalDateTime.now();
+
+        // Define a formatter with the desired pattern
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        // Format LocalDateTime to a string
+        String date = currentDateTime.format(formatter);
+
+        int idAbonnement = getKeyByValue(abonnementHashMap, selectedAbonnement);
+
+
+        // Create an Recharge object with the retrieved data
+        Supplement supplement = new Supplement(idAbonnement, Float.parseFloat(prix), date);
+
+        // Insert the RechargeRecharge data into the database
+        long result = new SupplementRepository(requireContext()).insertRechargeSupplement(supplement);
+
+        // Check if the insertion was successful
+        if (result != -1) {
+            // Data inserted successfully, you can show a success message or perform any other actions
+            Toast.makeText(requireContext(), "Data inserted successfully", Toast.LENGTH_SHORT).show();
+        } else {
+            // Failed to insert data, you can show an error message or perform any other actions
+            Toast.makeText(requireContext(), "Failed to insert data", Toast.LENGTH_SHORT).show();
+        }
+
+    }
 }

@@ -11,34 +11,34 @@
                 <item
                     android:id="@+id/nav_reflow"
                     android:icon="@drawable/ic_gallery_black_24dp"
-                    android:title="@string/menu_reflow" />
+                    android:title="Dashboard" />
         <!--        <item-->
 <!--            android:id="@+id/nav_slideshow"-->
 <!--            android:icon="@drawable/ic_slideshow_black_24dp"-->
 <!--            android:title="@string/menu_slideshow" />-->
-        <item
+        <!-- <item
 
 
-            android:id="@+id/nav_form_abonnement"
-            android:icon="@drawable/ic_slideshow_black_24dp"
-            android:title="@string/menu_form_abonnement" />
-        <item
+             android:id="@+id/nav_form_abonnement"
+             android:icon="@drawable/ic_slideshow_black_24dp"
+             android:title="@string/menu_form_abonnement" />-->
+         <item
 
 
-            android:id="@+id/nav_form_dashboard_comp"
-            android:icon="@drawable/ic_slideshow_black_24dp"
-            android:title="DashboardComparator" />
+             android:id="@+id/nav_form_dashboard_comp"
+             android:icon="@drawable/ic_slideshow_black_24dp"
+             android:title="Dashboard Comparator" />
 
 
-        <item
-            android:id="@+id/nav_recharge"
-            android:icon="@android:drawable/ic_input_add"
-            android:title="@string/menu_recharge" />
-        <item
+         <item
+             android:id="@+id/nav_recharge"
+             android:icon="@android:drawable/ic_input_add"
+             android:title="@string/menu_recharge" />
+         <item
 
-            android:id="@+id/nav_showAbonnements"
-            android:icon="@drawable/ic_slideshow_black_24dp"
-            android:title="Abonnements" />
+             android:id="@+id/nav_showAbonnements"
+             android:icon="@drawable/ic_slideshow_black_24dp"
+             android:title="Abonnements" />
 
-    </group>
-</menu>
+     </group>
+ </menu>

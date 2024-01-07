@@ -30,14 +30,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             MyDatabase.execSQL("CREATE TABLE abonnements (" + "id INTEGER PRIMARY KEY," + "dateDebut String," + "dateFin String," + "prix FLOAT," + "typeAbonnement INTEGER," + "operateur INTEGER," + "userId INTEGER," + "FOREIGN KEY(userId) REFERENCES users(id))");
             insertAbonnement(MyDatabase, "01/01/2023", "31/12/2023", 100.0f, TypeAbonnement.Enum.fibreOptique.ordinal(), OperateurEnum.Enum.IAM.ordinal(), 1);
             insertAbonnement(MyDatabase,"01/01/2024", "31/12/2024", 150.0f, TypeAbonnement.Enum.WIFI.ordinal(), OperateurEnum.Enum.INWI.ordinal(), 2);
-
+            insertAbonnement(MyDatabase, "01/01/2019", "31/12/2019", 200.0f, TypeAbonnement.Enum.fibreOptique.ordinal(), OperateurEnum.Enum.IAM.ordinal(), 1);
+            insertAbonnement(MyDatabase,"01/01/2024", "31/12/2024", 98.0f, TypeAbonnement.Enum.WIFI.ordinal(), OperateurEnum.Enum.INWI.ordinal(), 2);
+            insertAbonnement(MyDatabase, "01/01/2024", "31/12/2024", 98.0f, TypeAbonnement.Enum.fibreOptique.ordinal(), OperateurEnum.Enum.IAM.ordinal(), 1);
 
         }
 
         if (!isTableExists(MyDatabase, "supplements")) {
             MyDatabase.execSQL("create Table supplements(" + " Id INTEGER primary key, " + "date String ," + "prix float, " + "abonnementId INTEGER," + " FOREIGN KEY(abonnementId) REFERENCES abonnements(id) )");
             MyDatabase.execSQL("INSERT INTO supplements (date, prix, abonnementId) VALUES ('01/03/2023', 100.0, 1)");
+            MyDatabase.execSQL("INSERT INTO supplements (date, prix, abonnementId) VALUES ('01/11/2019', 50.0, 1)");
+            MyDatabase.execSQL("INSERT INTO supplements (date, prix, abonnementId) VALUES ('01/05/2019', 60.0, 1)");
+            MyDatabase.execSQL("INSERT INTO supplements (date, prix, abonnementId) VALUES ('01/08/2019', 40.0, 1)");
+
+            MyDatabase.execSQL("INSERT INTO supplements (date, prix, abonnementId) VALUES ('01/03/2024', 100.0, 1)");
+            MyDatabase.execSQL("INSERT INTO supplements (date, prix, abonnementId) VALUES ('01/11/2024', 50.0, 1)");
+            MyDatabase.execSQL("INSERT INTO supplements (date, prix, abonnementId) VALUES ('01/05/2024', 60.0, 1)");
+            MyDatabase.execSQL("INSERT INTO supplements (date, prix, abonnementId) VALUES ('01/08/2024', 40.0, 1)");
             MyDatabase.execSQL("INSERT INTO supplements (date, prix, abonnementId) VALUES ('01/04/2023', 150.0, 2)");
+
         }
 
         if (!isTableExists(MyDatabase, "recharges")) {

@@ -31,4 +31,5 @@ across the layout configurations
             app:headerLayout="@layout/nav_header_main"
             app:menu="@menu/navigation_drawer" />
     </androidx.drawerlayout.widget.DrawerLayout>
+
 </FrameLayout>

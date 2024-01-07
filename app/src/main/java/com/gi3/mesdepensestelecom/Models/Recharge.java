@@ -8,5 +8,13 @@ public class Recharge {
     public int idUser;
     public float prix;
     public String date;
+    public int operateur;
 
+
+    public Recharge(float v, int operator, int userId, String date) {
+        this.prix= v;
+        this.operateur= operator;
+        this.idUser= userId;
+        this.date = date;
+    }
 }

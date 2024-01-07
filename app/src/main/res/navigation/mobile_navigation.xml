@@ -52,4 +52,22 @@
         android:label="@string/menu_logout"
         tools:layout="@layout/fragment_abonnement" />
 
+    <fragment
+        android:id="@+id/nav_recharge"
+        android:name="com.gi3.mesdepensestelecom.ui.recharge.RechargeFragment"
+        android:label="Recharge"
+        tools:layout="@layout/fragment_recharge" />
+
+    <fragment
+        android:id="@+id/fragment_recharge_simple"
+        android:name="com.gi3.mesdepensestelecom.ui.recharge.RechargeSimpleFragment"
+        android:label="Recharge Simple"
+        tools:layout="@layout/fragment_recharge_simple" />
+
+    <fragment
+        android:id="@+id/fragment_recharge_supplement"
+        android:name="com.gi3.mesdepensestelecom.ui.recharge.RechargeSupplementFragment"
+        android:label="Recharge Supplément"
+        tools:layout="@layout/fragment_recharge_supplement" />
+
 </navigation>

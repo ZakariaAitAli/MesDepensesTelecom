@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.gi3.mesdepensestelecom.R;
@@ -34,8 +35,12 @@ public class LogoutFragment extends Fragment {
         logoutButton.setOnClickListener(view -> {
             // Perform logout actions here, such as clearing user sessions or preferences
 
+            // Clear user login status
+
+
             // Navigate back to the login screen
-            Navigation.findNavController(view).navigate(R.id.nav_login);
+            NavController navController = Navigation.findNavController(view);
+            navController.navigate(R.id.nav_login);
         });
 
         return root;

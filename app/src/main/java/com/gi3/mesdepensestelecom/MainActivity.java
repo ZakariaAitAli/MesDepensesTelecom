@@ -114,6 +114,14 @@ public class MainActivity extends AppCompatActivity {
             // Inflate the menu; this adds items to the action bar if it is present.
             getMenuInflater().inflate(R.menu.overflow, menu);
         }
+    if (navController.getCurrentDestination().getId() == R.id.nav_login
+                || navController.getCurrentDestination().getId() == R.id.nav_register) {
+            // invisible the menu; this adds items to the action bar if it is present.
+            getMenuInflater().inflate(R.menu.overflow, menu);
+            menu.findItem(R.id.nav_settings).setVisible(false);
+            menu.findItem(R.id.nav_logout).setVisible(false);
+
+        }
         return result;
     }
 

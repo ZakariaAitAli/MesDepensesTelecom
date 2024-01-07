@@ -61,8 +61,8 @@ public class RegisterFragment extends Fragment {
             showToast("All fields are mandatory");
         } else if (!confirmPassword.equals(password)) {
             showToast("Passwords do not match");
-//        } else if (password.length() < 6) {
-//            showToast("Password must be at least 6 characters");
+        } else if (password.length() < 5) {
+            showToast("Password must be at least 5 characters");
         } else {
             // Create a User object with the entered username and password
             User user = new User();

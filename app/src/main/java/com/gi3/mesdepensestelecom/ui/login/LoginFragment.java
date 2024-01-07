@@ -130,6 +130,14 @@ public class LoginFragment extends Fragment {
                         passwordEditText.getText().toString());
             }
         });
+
+        TextView signupLink = binding.signupRedirectText;
+        signupLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(LoginFragment.this).navigate(R.id.nav_register);
+            }
+        });
     }
 
     private void updateUiWithUser(LoggedInUserView model) {

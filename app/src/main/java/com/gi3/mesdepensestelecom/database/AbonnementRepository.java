@@ -127,7 +127,6 @@ public class AbonnementRepository extends SQLiteOpenHelper {
                 }
             }
 
-           ;
             for (Abonnement item : abonnementsList) {
 
                 int diff = getMonthDifference(item.dateDebut, item.dateFin) ;

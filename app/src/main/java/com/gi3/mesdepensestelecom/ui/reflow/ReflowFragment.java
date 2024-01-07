@@ -35,7 +35,7 @@ public class ReflowFragment extends Fragment {
 
     private FragmentReflowBinding binding;
     private DatabaseHelper databaseHelper;
-    private List<String> xValues = Arrays.asList("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+    private final List<String> xValues = Arrays.asList("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -89,7 +89,7 @@ public class ReflowFragment extends Fragment {
 
         barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(xValues)) ;
         barChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM) ;
-        barChart.getXAxis().setGranularity(1f); ;
+        barChart.getXAxis().setGranularity(1f);
         barChart.getXAxis().setGranularityEnabled(true);
 
 

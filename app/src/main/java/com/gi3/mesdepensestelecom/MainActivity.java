@@ -22,6 +22,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -105,9 +107,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         boolean result = super.onCreateOptionsMenu(menu);
-        NavigationView navView = findViewById(R.id.nav_view);
-        if (navView == null && mAppBarConfiguration != null && !mAppBarConfiguration.getTopLevelDestinations().contains(R.id.nav_login) && !mAppBarConfiguration.getTopLevelDestinations().contains(R.id.nav_register)) {
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+    if (Objects.requireNonNull(navController.getCurrentDestination()).getId() == R.id.nav_transform
+                || navController.getCurrentDestination().getId() == R.id.nav_reflow
+                || navController.getCurrentDestination().getId() == R.id.nav_slideshow) {
+            // Inflate the menu; this adds items to the action bar if it is present.
             getMenuInflater().inflate(R.menu.overflow, menu);
+        }
+    if (navController.getCurrentDestination().getId() == R.id.nav_login
+                || navController.getCurrentDestination().getId() == R.id.nav_register) {
+            // invisible the menu; this adds items to the action bar if it is present.
+            getMenuInflater().inflate(R.menu.overflow, menu);
+            menu.findItem(R.id.nav_settings).setVisible(false);
+            menu.findItem(R.id.nav_logout).setVisible(false);
+
         }
         return result;
     }
@@ -118,6 +131,10 @@ public class MainActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.nav_settings) {
             NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
             navController.navigate(R.id.nav_settings);
+        }
+        if (item.getItemId() == R.id.nav_logout) {
+            NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+            navController.navigate(R.id.nav_login);
         }
         return super.onOptionsItemSelected(item);
     }

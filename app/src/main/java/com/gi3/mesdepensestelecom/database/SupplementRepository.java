@@ -11,7 +11,7 @@ import com.gi3.mesdepensestelecom.Models.Supplement;
 import java.util.HashMap;
 
 public class SupplementRepository {
-    private DatabaseHelper databaseHelper;
+    private final DatabaseHelper databaseHelper;
 
     public SupplementRepository(Context context) {
         this.databaseHelper = new DatabaseHelper(context);

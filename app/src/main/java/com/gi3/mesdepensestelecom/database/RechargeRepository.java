@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.gi3.mesdepensestelecom.Models.Recharge;
 
 public class RechargeRepository {
-    private DatabaseHelper databaseHelper;
+    private final DatabaseHelper databaseHelper;
 
     public RechargeRepository(Context context) {
         this.databaseHelper = new DatabaseHelper(context);

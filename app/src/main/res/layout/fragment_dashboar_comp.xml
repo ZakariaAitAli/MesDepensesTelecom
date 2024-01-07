@@ -14,20 +14,27 @@
         android:textSize="18sp"
         android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/btnStartDate"
+    <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btnStartDate"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:text="Select First Date" />
+    <Button
+        android:id="@+id/btnEndDate"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
-        android:text="Select First Date" />
-
-    <Button
-        android:id="@+id/btnEndDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
         android:text="Select Second Date" />
+    </LinearLayout>
 
 
 
@@ -40,8 +47,6 @@
         android:layout_marginBottom="16dp"
         android:text="@string/submit" />
 
-
-    <!-- BarChart -->
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/chart"
         android:layout_width="match_parent"
@@ -49,3 +54,5 @@
         android:layout_weight="1" />
 
 </LinearLayout>
+
+

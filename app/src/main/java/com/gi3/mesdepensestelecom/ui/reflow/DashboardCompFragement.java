@@ -74,10 +74,13 @@ public class DashboardCompFragement extends Fragment {
                 String selectedYearStart = startDate.split("/")[2] ;
                 String selectedYearEnd = endDate.split("/")[2] ;
                 int selectedMonthStart = Integer.valueOf(startDate.split("/")[1]);
-            int selectedMonthEnd= Integer.valueOf(endDate.split("/")[1]);
+                int selectedMonthEnd= Integer.valueOf(endDate.split("/")[1]);
 
                 AbonnementRepository abo = new AbonnementRepository(getContext()) ;
                 abonnements = abo.GetAbonnements(String.valueOf(selectedYearEnd)) ;
+                if(abonnements.size() == 0) {
+                    abonnements = abo.GetAbonnements(String.valueOf(selectedYearEnd)) ;
+                }
                 entries.clear();
 
                 for (int month = 1; month <= 12; month++) {
@@ -85,15 +88,17 @@ public class DashboardCompFragement extends Fragment {
                     String key = String.format("%04d-%02d", Integer.parseInt(selectedYearStart), month);
 
                     if (abonnements.containsKey(key)) {
-                        if (month+1 == selectedMonthStart || month+1 == selectedMonthEnd) {
+                        if (month == selectedMonthStart || month == selectedMonthEnd) {
                             entries.add(new BarEntry(month, abonnements.get(key)));
 
                         }
 
                     }
+
                 }
 
-
+            barChart.notifyDataSetChanged();
+            barChart.invalidate();
         });
 
         barChart.getAxisRight().setDrawLabels(false);

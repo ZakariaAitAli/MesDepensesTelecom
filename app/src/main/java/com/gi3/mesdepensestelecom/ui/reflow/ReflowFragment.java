@@ -93,6 +93,8 @@ public class ReflowFragment extends Fragment {
                     } else {
                         entries.add(new BarEntry(month, 0));
                     }
+                    barChart.notifyDataSetChanged();
+                    barChart.invalidate();
                 }
             }
 

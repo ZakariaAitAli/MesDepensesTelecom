@@ -8,19 +8,21 @@
     android:padding="16dp"
     tools:context=".ui.reflow.ReflowFragment">
 
-    <!-- Spinner for selecting options -->
-<Spinner
-android:id="@+id/spinnerOptions"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:layout_marginBottom="16dp"
-    android:entries="@array/options_array" />
+    <Spinner
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/yearPicker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:entries="@array/years_array" />
+
+
 
     <!-- BarChart -->
-<com.github.mikephil.charting.charts.BarChart
-android:id="@+id/chart"
-android:layout_width="match_parent"
-android:layout_height="0dp"
-android:layout_weight="1" />
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/chart"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
-    </LinearLayout>
+</LinearLayout>

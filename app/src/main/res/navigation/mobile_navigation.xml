@@ -16,6 +16,11 @@
         android:name="com.gi3.mesdepensestelecom.ui.reflow.ReflowFragment"
         android:label="@string/menu_reflow"
         tools:layout="@layout/fragment_reflow" />
+    <fragment
+        android:id="@+id/nav_form_dashboard_comp"
+        android:name="com.gi3.mesdepensestelecom.ui.reflow.DashboardCompFragement"
+        android:label="dashboardComparator"
+        tools:layout="@layout/fragment_dashboar_comp" />
 
     <fragment
         android:id="@+id/nav_slideshow"

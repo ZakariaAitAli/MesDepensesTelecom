@@ -28,17 +28,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (!isTableExists(MyDatabase, "abonnements")) {
 
             MyDatabase.execSQL("CREATE TABLE abonnements (" + "id INTEGER PRIMARY KEY," + "dateDebut String," + "dateFin String," + "prix FLOAT," + "typeAbonnement INTEGER," + "operateur INTEGER," + "userId INTEGER," + "FOREIGN KEY(userId) REFERENCES users(id))");
-            insertAbonnement(MyDatabase, "12/03/2023", "12/04/2024", 100.0f, TypeAbonnement.Enum.fibreOptique.ordinal(), OperateurEnum.Enum.IAM.ordinal(), 1);
-            insertAbonnement(MyDatabase,"12/03/2023", "12/04/2024", 150.0f, TypeAbonnement.Enum.WIFI.ordinal(), OperateurEnum.Enum.INWI.ordinal(), 2);
+            insertAbonnement(MyDatabase, "01/01/2023", "31/12/2023", 100.0f, TypeAbonnement.Enum.fibreOptique.ordinal(), OperateurEnum.Enum.IAM.ordinal(), 1);
+            insertAbonnement(MyDatabase,"01/01/2024", "31/12/2024", 150.0f, TypeAbonnement.Enum.WIFI.ordinal(), OperateurEnum.Enum.INWI.ordinal(), 2);
+
 
         }
 
         if (!isTableExists(MyDatabase, "supplements")) {
             MyDatabase.execSQL("create Table supplements(" + " Id INTEGER primary key, " + "date String ," + "prix float, " + "abonnementId INTEGER," + " FOREIGN KEY(abonnementId) REFERENCES abonnements(id) )");
+            MyDatabase.execSQL("INSERT INTO supplements (date, prix, abonnementId) VALUES ('01/03/2023', 100.0, 1)");
+            MyDatabase.execSQL("INSERT INTO supplements (date, prix, abonnementId) VALUES ('01/04/2023', 150.0, 2)");
         }
 
         if (!isTableExists(MyDatabase, "recharges")) {
+
             MyDatabase.execSQL("create Table recharges(" + " id INTEGER primary key, " + "date String ," + "somme float, " + "userId INTEGER," + "operateur Integer," + "FOREIGN KEY(userId) REFERENCES users(id) )" );
+            // Insert data into "recharges" table
+            MyDatabase.execSQL("INSERT INTO recharges (date, somme, userId,operateur) VALUES ('01/05/2023', 20.0, 1,1)");
+            MyDatabase.execSQL("INSERT INTO recharges (date, somme, userId,operateur) VALUES ('01/06/2023', 40.0, 2,1)");
+
         }
     }
 

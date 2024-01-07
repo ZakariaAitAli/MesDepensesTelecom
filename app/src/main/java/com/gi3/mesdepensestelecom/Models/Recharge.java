@@ -17,4 +17,7 @@ public class Recharge {
         this.idUser= userId;
         this.date = date;
     }
+    public Recharge() {
+
+    }
 }

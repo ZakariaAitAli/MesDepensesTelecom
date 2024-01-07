@@ -109,8 +109,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
-        AbonnementRepository abo = new AbonnementRepository(this) ;
-      //  abo.GetAbonnements(TypeAbonnement.Enum.fibreOptique.toString()) ;
+      /*  AbonnementRepository abo = new AbonnementRepository(this) ;
+        abo.GetAbonnements("2023") ;*/
     }
 
     // Inflate the overflow menu

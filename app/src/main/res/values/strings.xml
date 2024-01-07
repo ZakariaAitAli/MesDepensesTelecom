@@ -40,6 +40,7 @@
     <string name="select_operator">Select Operator</string>
     <string name="select_start_date">Select Start Date</string>
     <string name="select_end_date">Select End Date</string>
+
     <string name="amount">Amount</string>
     <string name="select_contract_duration">Select Contract Duration</string>
     <string name="submit">Submit</string>

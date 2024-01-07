@@ -10,10 +10,15 @@ import com.gi3.mesdepensestelecom.Models.Abonnement;
 import androidx.annotation.Nullable;
 import android.content.ContentValues;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.gi3.mesdepensestelecom.Models.Abonnement;
+import com.gi3.mesdepensestelecom.Models.Recharge;
+import com.gi3.mesdepensestelecom.Models.Supplement;
 import com.gi3.mesdepensestelecom.Models.TypeAbonnement;
 
 
@@ -27,8 +32,7 @@ import java.text.ParseException;
 import java.util.Calendar;
 
 import java.util.Locale;
-
-
+import java.util.concurrent.TimeUnit;
 
 
 public class AbonnementRepository extends SQLiteOpenHelper {
@@ -42,7 +46,6 @@ public class AbonnementRepository extends SQLiteOpenHelper {
         databaseHelper = new DatabaseHelper(context);
         db = databaseHelper.getWritableDatabase();
     }
-
 
 
     public long insertAbonnement(Abonnement abonnement) {
@@ -75,8 +78,6 @@ public class AbonnementRepository extends SQLiteOpenHelper {
 
         while (cursor.moveToNext()) {
             //Abonnement abonnement = new Abonnement();
-
-
            /* abonnement.Id =cursor.getInt(0);
             abonnement.dateDebut =cursor.getString(1);
             abonnement.dateFin =cursor.getString(2);
@@ -94,6 +95,9 @@ public class AbonnementRepository extends SQLiteOpenHelper {
             String abonnementData = typeAbonnement + "- Montant: " + prix + "Dhs - Date fin: "+ dateFin ;
             abonnements.add(abonnementData);
 
+
+
+
         }
 
         cursor.close();
@@ -104,21 +108,20 @@ public class AbonnementRepository extends SQLiteOpenHelper {
 //REMEMBER TO ADD DATE
 
     //REMEMBER TO ADD DATE
-    public void GetAbonnements(String typeAbo) {
-
-
+    public  HashMap<String, Float>  GetAbonnements(String year) {
         List<Abonnement> abonnementsList = new ArrayList<>();
-        HashMap<String, String> AbonnementsDic = new HashMap<>();
+        List<Supplement> supplements = new ArrayList<>();
+        List<Recharge> recharges = new ArrayList<>();
 
-        String typeAboEnum = Integer.toString(TypeAbonnement.Enum.valueOf(typeAbo).ordinal());
+        HashMap<String, Float> abonnementsDic = new HashMap<>();
 
-        Cursor cursor = db.rawQuery("SELECT * FROM abonnements WHERE typeAbonnement=? ", new String[]{typeAboEnum});
+        Cursor cursor = db.rawQuery("SELECT * FROM abonnements ", new String[]{});
 
         try {
             int idIndex = cursor.getColumnIndex("id");
             int dateDebutIndex = cursor.getColumnIndex("dateDebut");
             int dateFinIndex = cursor.getColumnIndex("dateFin");
-            int sommeIndex = cursor.getColumnIndex("somme");
+            int sommeIndex = cursor.getColumnIndex("prix");
             int operateurIndex = cursor.getColumnIndex("operateur");
             int userIdIndex = cursor.getColumnIndex("userId");
             int typeAbonnementIndex = cursor.getColumnIndex("typeAbonnement");
@@ -140,44 +143,167 @@ public class AbonnementRepository extends SQLiteOpenHelper {
             }
 
             for (Abonnement item : abonnementsList) {
+                int diff = getMonthDifference(item.dateDebut, item.dateFin);
 
-                int diff = getMonthDifference(item.dateDebut, item.dateFin) ;
-                for(int i=1 ; i<=diff;i++) {
+                // Parse the start date to extract the year and month
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                Date startDate;
+                try {
+                    startDate = dateFormat.parse(item.dateDebut);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    continue;
                 }
-             }
+
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(startDate);
+
+                for (int i = 0; i < diff; i++) {
+                    // Check if the year matches the specified year
+                    if (calendar.get(Calendar.YEAR) == Integer.parseInt(year)) {
+                        String key = String.format("%tY-%tm", calendar, calendar);
+                        if (abonnementsDic.containsKey(key)) {
+                            float somme = abonnementsDic.get(key) + item.prix;
+                            abonnementsDic.replace(key, somme);
+                        } else {
+                            abonnementsDic.put(key, item.prix);
+                        }
+                    }
+                    calendar.add(Calendar.MONTH, 1);
+                }
+            }
+            supplements =getSupplementsByYear(year) ;
+            recharges = getRechargesByYear(year) ;
+            for (Supplement supp : supplements) {
+                try {
+
+                    SimpleDateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy");
+                    Date date = inputFormat.parse(supp.date);
+
+                    SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM");
+                    String formattedDate = outputFormat.format(date);
+
+
+                    if (abonnementsDic.containsKey(formattedDate)) {
+                        float somme = abonnementsDic.get(formattedDate) + supp.prix;
+                        abonnementsDic.replace(formattedDate, somme);
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            for(Recharge rech : recharges) {
+
+          try{
+                SimpleDateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy");
+                Date date = inputFormat.parse(rech.date);
+
+                SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy/MM");
+                String formattedDate = outputFormat.format(date);
+                if (abonnementsDic.containsKey(formattedDate)) {
+                    float somme = abonnementsDic.get(formattedDate) + rech.prix;
+                    abonnementsDic.replace(formattedDate, somme);
+                }else {
+                    abonnementsDic.put(formattedDate,rech.prix);
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            }
+
+
+        } finally {
+            cursor.close();
+
+        }
+        return abonnementsDic ;
+    }
+
+    public List<Recharge> getRechargesByYear(String year) {
+        List<Recharge> rechargesList = new ArrayList<>();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM recharges WHERE SUBSTR(date, -4) = ? AND date LIKE '__/__/____'", new String[]{year});
+
+        try {
+            int idIndex = cursor.getColumnIndex("id");
+            int dateIndex = cursor.getColumnIndex("date");
+            int sommeIndex = cursor.getColumnIndex("somme");
+            int userIdIndex = cursor.getColumnIndex("userId");
+
+            while (cursor.moveToNext()) {
+                if (idIndex != -1) {
+                    Recharge recharge = new Recharge();
+
+                    recharge.Id = cursor.getInt(idIndex);
+                    recharge.date = cursor.getString(dateIndex);
+                    recharge.prix = cursor.getFloat(sommeIndex);
+
+                    rechargesList.add(recharge);
+                }
+            }
         } finally {
             cursor.close();
         }
 
+        return rechargesList;
     }
 
-    public int getMonthDifference(String dateDebut, String dateFin) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+
+    public List<Supplement> getSupplementsByYear(String year) {
+        List<Supplement> supplementsList = new ArrayList<>();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM supplements WHERE SUBSTR(date, -4) = ? AND date LIKE '__/__/____'", new String[]{year});
 
         try {
-            Date startDate = dateFormat.parse(dateDebut);
-            Date endDate = dateFormat.parse(dateFin);
+            int idIndex = cursor.getColumnIndex("Id");
+            int dateIndex = cursor.getColumnIndex("date");
+            int prixIndex = cursor.getColumnIndex("prix");
+            int abonnementIdIndex = cursor.getColumnIndex("abonnementId");
 
-            Calendar startCalendar = Calendar.getInstance();
-            startCalendar.setTime(startDate);
+            while (cursor.moveToNext()) {
+                if (idIndex != -1) {
+                    Supplement supplement = new Supplement();
 
-            Calendar endCalendar = Calendar.getInstance();
-            endCalendar.setTime(endDate);
+                    supplement.id = cursor.getInt(idIndex);
+                    supplement.date = cursor.getString(dateIndex);
+                    supplement.prix = cursor.getFloat(prixIndex);
+                    supplement.idAbonnement = cursor.getInt(abonnementIdIndex);
 
-            int diffYear = endCalendar.get(Calendar.YEAR) - startCalendar.get(Calendar.YEAR);
-            int diffMonth = endCalendar.get(Calendar.MONTH) - startCalendar.get(Calendar.MONTH);
-
-            if (endCalendar.get(Calendar.DAY_OF_MONTH) < startCalendar.get(Calendar.DAY_OF_MONTH)) {
-                diffMonth--;
+                    supplementsList.add(supplement);
+                }
             }
+        } finally {
+            cursor.close();
+        }
 
-            return Math.abs(diffYear * 12 + diffMonth);
+        return supplementsList;
+    }
+
+
+
+
+    public int getMonthDifference(String dateString1, String dateString2) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            Date date1 = dateFormat.parse(dateString1);
+            Date date2 = dateFormat.parse(dateString2);
+
+            // Calculate the difference in months
+            long diffInMillies = Math.abs(date2.getTime() - date1.getTime());
+            long diffInDays = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+
+            int monthsDifference = (int) (diffInDays / 30);
+             return monthsDifference ;
+
         } catch (ParseException e) {
-            e.printStackTrace(); // Handle the parsing exception according to your requirements
-            return -1; // Return an error code or handle the error as needed
+            e.printStackTrace();
+            return -1 ;
         }
 
     }
+
+
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {

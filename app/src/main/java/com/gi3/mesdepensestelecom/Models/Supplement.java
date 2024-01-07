@@ -14,4 +14,7 @@ public class Supplement {
         this.prix=prix;
         this.date=date;
     }
+    public Supplement() {
+
+    }
 }

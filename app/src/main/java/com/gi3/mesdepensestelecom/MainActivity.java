@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         //MIGRATIONS:
         databaseHelper = new DatabaseHelper(this);
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
-       // databaseHelper.onUpgrade(db,0,0);
+        databaseHelper.onUpgrade(db,0,0);
         databaseHelper.onCreate(db);
 
         // Inflating the layout using View Binding
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
             });
         }
         AbonnementRepository abo = new AbonnementRepository(this) ;
-        abo.GetAbonnements(TypeAbonnement.Enum.fibreOptique.toString()) ;
+      //  abo.GetAbonnements(TypeAbonnement.Enum.fibreOptique.toString()) ;
     }
 
     // Inflate the overflow menu

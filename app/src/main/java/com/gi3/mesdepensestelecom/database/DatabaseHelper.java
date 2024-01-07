@@ -21,8 +21,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase MyDatabase) {
         if (!isTableExists(MyDatabase, "users")) {
             MyDatabase.execSQL("create Table users(id INTEGER primary key, username TEXT, password TEXT)");
-            insertUser(MyDatabase, "simofatt", "6341");
-            insertUser(MyDatabase, "nada", "6341");
+            insertUser(MyDatabase, "simofatt", "63416341");
+            insertUser(MyDatabase, "nada", "63416341");
         }
 
         if (!isTableExists(MyDatabase, "abonnements")) {

@@ -1,6 +1,9 @@
 package com.gi3.mesdepensestelecom.ui.abonnement_form;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.app.DatePickerDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +31,8 @@ import java.util.List;
 
 public class AbonnementFragment extends Fragment {
 
+    SharedPreferences sharedPreferences;
+
     private Button btnStartDate;
     private Button btnEndDate;
     private Calendar calendar;
@@ -43,6 +48,14 @@ public class AbonnementFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_abonnement, container, false);
+
+
+
+        sharedPreferences = requireContext().getSharedPreferences("user_session", MODE_PRIVATE);
+
+        String displayName = sharedPreferences.getString("display_name", "");
+        String userIdString = sharedPreferences.getString("user_id", "");
+        int userId = Integer.parseInt(userIdString);
 
         operatorHashMap = new HashMap<>();
         operatorHashMap.put(0, "IAM");
@@ -135,6 +148,12 @@ public class AbonnementFragment extends Fragment {
 
     // Method to handle the insertion of data
     private void insertAbonnementData() {
+        sharedPreferences = requireContext().getSharedPreferences("user_session", MODE_PRIVATE);
+
+        String displayName = sharedPreferences.getString("display_name", "");
+        String userIdString = sharedPreferences.getString("user_id", "");
+        int userId = Integer.parseInt(userIdString);
+
         // Retrieve data from UI elements
         String startDate = btnStartDate.getText().toString();
         String endDate = btnEndDate.getText().toString();
@@ -149,7 +168,6 @@ public class AbonnementFragment extends Fragment {
         int typeAbonnement = getKeyByValue(TypeAbonnementHashMap, selectedTypeAbonnement);
 
         // Assuming you have a user ID, replace "yourUserId" with the actual user ID
-        int userId = 1;
 
         // Create an Abonnement object with the retrieved data
         Abonnement abonnement = new Abonnement(startDate, endDate, Float.parseFloat(prix), operator, userId, typeAbonnement);

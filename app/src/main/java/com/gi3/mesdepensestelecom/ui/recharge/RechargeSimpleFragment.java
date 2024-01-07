@@ -1,5 +1,8 @@
 package com.gi3.mesdepensestelecom.ui.recharge;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -32,6 +35,8 @@ import java.util.List;
  */
 public class RechargeSimpleFragment extends Fragment {
 
+
+    SharedPreferences sharedPreferences;
 
     private Button btnSubmit;
     private EditText editTextAmount;
@@ -89,6 +94,8 @@ public class RechargeSimpleFragment extends Fragment {
         operatorHashMap.put(2, "INWI");
         operatorHashMap.put(3, "ORANGE");
 
+        sharedPreferences = requireContext().getSharedPreferences("user_session", MODE_PRIVATE);
+
         spinnerOperator = view.findViewById(R.id.spinnerOperator);
         btnSubmit = view.findViewById(R.id.btnSubmit);
         editTextAmount = view.findViewById(R.id.editTextAmount);
@@ -131,7 +138,10 @@ public class RechargeSimpleFragment extends Fragment {
         int operator = getKeyByValue(operatorHashMap, selectedOperator);
 
         // Assuming you have a user ID, replace "yourUserId" with the actual user ID
-        int userId = 1;
+
+        String displayName = sharedPreferences.getString("display_name", "");
+        String userIdString = sharedPreferences.getString("user_id", "");
+        int userId = Integer.parseInt(userIdString);
 
         // Create an Recharge object with the retrieved data
         Recharge recharge = new Recharge( Float.parseFloat(prix), operator, userId, date);

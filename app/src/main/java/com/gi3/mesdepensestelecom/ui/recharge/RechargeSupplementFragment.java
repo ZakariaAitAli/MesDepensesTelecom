@@ -1,8 +1,10 @@
 package com.gi3.mesdepensestelecom.ui.recharge;
 
+import static android.content.Context.MODE_PRIVATE;
 import static com.gi3.mesdepensestelecom.R.*;
 import static com.gi3.mesdepensestelecom.ui.abonnement_form.AbonnementFragment.getKeyByValue;
 
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -38,6 +40,8 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class RechargeSupplementFragment extends Fragment {
+
+    SharedPreferences sharedPreferences;
 
     private Button btnSubmit;
     private EditText editTextAmount;
@@ -93,7 +97,13 @@ public class RechargeSupplementFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(layout.fragment_recharge_supplement, container, false) ;
 
-        abonnementHashMap = new SupplementRepository(requireContext()).getAbonnementsMapByUserId(1);
+        sharedPreferences = requireContext().getSharedPreferences("user_session", MODE_PRIVATE);
+
+        String displayName = sharedPreferences.getString("display_name", "");
+        String userIdString = sharedPreferences.getString("user_id", "");
+        int userId = Integer.parseInt(userIdString);
+
+        abonnementHashMap = new SupplementRepository(requireContext()).getAbonnementsMapByUserId(userId);
 
         spinnerAbonnement = view.findViewById(id.spinnerAbonnement);
         editTextAmount = view.findViewById(R.id.editTextAmount);

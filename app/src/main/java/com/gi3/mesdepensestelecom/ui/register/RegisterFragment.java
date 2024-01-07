@@ -2,6 +2,8 @@ package com.gi3.mesdepensestelecom.ui.register;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +16,8 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.gi3.mesdepensestelecom.MainActivity;
-import com.gi3.mesdepensestelecom.R;
 import com.gi3.mesdepensestelecom.Models.User;
+import com.gi3.mesdepensestelecom.R;
 import com.gi3.mesdepensestelecom.database.UserRepository;
 
 public class RegisterFragment extends Fragment {
@@ -23,6 +25,7 @@ public class RegisterFragment extends Fragment {
     private EditText usernameEditText;
     private EditText passwordEditText;
     private EditText confirmPasswordEditText;
+    private Button registerButton;
 
     // Instantiate UserRepository
     private UserRepository userRepository;
@@ -36,20 +39,53 @@ public class RegisterFragment extends Fragment {
         usernameEditText = root.findViewById(R.id.username);
         passwordEditText = root.findViewById(R.id.password);
         confirmPasswordEditText = root.findViewById(R.id.confirm_password);
-
-        Button registerButton = root.findViewById(R.id.register);
-        View loginRedirectText = root.findViewById(R.id.loginRedirect);
+        registerButton = root.findViewById(R.id.register);
 
         // Instantiate UserRepository
         userRepository = new UserRepository(requireContext());
 
+        setupInputListeners();
+
         registerButton.setOnClickListener(v -> attemptRegister());
 
+        View loginRedirectText = root.findViewById(R.id.loginRedirect);
         // Set an OnClickListener to navigate to the login fragment
         loginRedirectText.setOnClickListener(v -> Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
                 .navigate(R.id.nav_login));
 
         return root;
+    }
+
+    private void setupInputListeners() {
+        // Add TextWatchers to enable/disable the register button based on input
+        TextWatcher textWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                // Ignore
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                // Ignore
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                enableDisableRegisterButton();
+            }
+        };
+
+        usernameEditText.addTextChangedListener(textWatcher);
+        passwordEditText.addTextChangedListener(textWatcher);
+        confirmPasswordEditText.addTextChangedListener(textWatcher);
+    }
+
+    private void enableDisableRegisterButton() {
+        boolean enableButton = !usernameEditText.getText().toString().isEmpty()
+                && !passwordEditText.getText().toString().isEmpty()
+                && !confirmPasswordEditText.getText().toString().isEmpty();
+
+        registerButton.setEnabled(enableButton);
     }
 
     private void attemptRegister() {

@@ -31,5 +31,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- New activity for AddAbonnementActivity -->
     </application>
 </manifest>

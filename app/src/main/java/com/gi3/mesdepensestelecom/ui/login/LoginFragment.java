@@ -1,5 +1,7 @@
 package com.gi3.mesdepensestelecom.ui.login;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -32,6 +34,7 @@ public class LoginFragment extends Fragment {
 
     private LoginViewModel loginViewModel;
     private FragmentLoginBinding binding;
+    private SharedPreferences sharedPreferences;
 
     @Nullable
     @Override
@@ -40,6 +43,9 @@ public class LoginFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         binding = FragmentLoginBinding.inflate(inflater, container, false);
+
+        sharedPreferences = requireContext().getSharedPreferences("user_session", Context.MODE_PRIVATE);
+
         return binding.getRoot();
 
     }
@@ -51,7 +57,7 @@ public class LoginFragment extends Fragment {
         DatabaseHelper databaseHelper = new DatabaseHelper(getContext());
         LoginRepository loginRepository = LoginRepository.getInstance(new LoginDataSource(databaseHelper));
 
-        loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory(loginRepository))
+        loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory(loginRepository, sharedPreferences))
                 .get(LoginViewModel.class);
 
         final EditText usernameEditText = binding.username;
@@ -116,7 +122,7 @@ public class LoginFragment extends Fragment {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     loginViewModel.login(usernameEditText.getText().toString(),
-                            passwordEditText.getText().toString());
+                            passwordEditText.getText().toString(), sharedPreferences);
                 }
                 return false;
             }
@@ -127,7 +133,7 @@ public class LoginFragment extends Fragment {
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
+                        passwordEditText.getText().toString(), sharedPreferences);
             }
         });
 

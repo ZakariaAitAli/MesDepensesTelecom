@@ -108,14 +108,14 @@ public class AbonnementRepository extends SQLiteOpenHelper {
 //REMEMBER TO ADD DATE
 
     //REMEMBER TO ADD DATE
-    public  HashMap<String, Float>  GetAbonnements(String year) {
+    public  HashMap<String, Float>  GetAbonnements(String year,int userId) {
         List<Abonnement> abonnementsList = new ArrayList<>();
         List<Supplement> supplements = new ArrayList<>();
         List<Recharge> recharges = new ArrayList<>();
 
         HashMap<String, Float> abonnementsDic = new HashMap<>();
 
-        Cursor cursor = db.rawQuery("SELECT * FROM abonnements ", new String[]{});
+        Cursor cursor = db.rawQuery("SELECT * FROM abonnements  Where userId= ?", new String[]{String.valueOf(userId)});
 
         try {
             int idIndex = cursor.getColumnIndex("id");
@@ -300,7 +300,6 @@ public class AbonnementRepository extends SQLiteOpenHelper {
             e.printStackTrace();
             return -1 ;
         }
-
     }
 
 

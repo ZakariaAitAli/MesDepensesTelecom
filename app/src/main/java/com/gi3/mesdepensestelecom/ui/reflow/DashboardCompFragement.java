@@ -1,6 +1,9 @@
 package com.gi3.mesdepensestelecom.ui.reflow;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.app.DatePickerDialog;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -49,10 +52,13 @@ public class DashboardCompFragement extends Fragment {
     private Calendar calendar;
     private Button buttonSubmit;
 
+    SharedPreferences sharedPreferences;
     private final List<String> xValues = Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12");
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
+        sharedPreferences = requireContext().getSharedPreferences("user_session", MODE_PRIVATE);
+        String userIdString = sharedPreferences.getString("user_id", "");
+        int userId = Integer.parseInt(userIdString);
         View root = inflater.inflate(R.layout.fragment_dashboar_comp, container, false);
         databaseHelper = new DatabaseHelper(requireContext());
         calendar = Calendar.getInstance();
@@ -77,9 +83,9 @@ public class DashboardCompFragement extends Fragment {
                 int selectedMonthEnd= Integer.valueOf(endDate.split("/")[1]);
 
                 AbonnementRepository abo = new AbonnementRepository(getContext()) ;
-                abonnements = abo.GetAbonnements(String.valueOf(selectedYearEnd)) ;
+                abonnements = abo.GetAbonnements(String.valueOf(selectedYearEnd),userId) ;
                 if(abonnements.size() == 0) {
-                    abonnements = abo.GetAbonnements(String.valueOf(selectedYearEnd)) ;
+                    abonnements = abo.GetAbonnements(String.valueOf(selectedYearEnd),userId) ;
                 }
                 entries.clear();
 

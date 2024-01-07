@@ -1,5 +1,8 @@
 package com.gi3.mesdepensestelecom.ui.reflow;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -50,11 +53,15 @@ public class ReflowFragment extends Fragment {
     private Spinner yearPicker;
     public HashMap<String, Float> abonnements = new HashMap<>();
     List<BarEntry> entries = new ArrayList<BarEntry>() ;
+    SharedPreferences sharedPreferences;
 
 
     private final List<String> xValues = Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12");
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        sharedPreferences = requireContext().getSharedPreferences("user_session", MODE_PRIVATE);
+        String userIdString = sharedPreferences.getString("user_id", "");
+        int userId = Integer.parseInt(userIdString);
 
         View root = inflater.inflate(R.layout.fragment_reflow, container, false);
         databaseHelper = new DatabaseHelper(requireContext());
@@ -78,16 +85,12 @@ public class ReflowFragment extends Fragment {
 
 
                 AbonnementRepository abo = new AbonnementRepository(getContext()) ;
-                abonnements = abo.GetAbonnements(String.valueOf(selectedYear)) ;
+                abonnements = abo.GetAbonnements(String.valueOf(selectedYear),userId) ;
                 entries.clear();
 
                 for (int month = 1; month <= 12; month++) {
 
-
-
                     String key = String.format("%04d-%02d", Integer.parseInt(selectedYear), month);
-
-
                     if (abonnements.containsKey(key)) {
                         entries.add(new BarEntry(month, abonnements.get(key)));
                     } else {

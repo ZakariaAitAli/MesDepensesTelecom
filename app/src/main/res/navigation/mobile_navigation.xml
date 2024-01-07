@@ -71,6 +71,11 @@
         android:name="com.gi3.mesdepensestelecom.ui.ShowAbonnements.ShowAbonnementFragment"
         android:label="Vos Abonnements"
         tools:layout="@layout/fragment_all_abonnements" />
+    <fragment
+        android:id="@+id/fabAddAbonnement"
+        android:name="com.gi3.mesdepensestelecom.ui.abonnement_form.AbonnementFragment"
+        android:label="Ajuter Abonnement"
+        tools:layout="@layout/fragment_abonnement" />
 
 
 </navigation>

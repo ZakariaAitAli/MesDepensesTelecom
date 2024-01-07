@@ -1,19 +1,31 @@
 <!-- res/layout/fragment_abonnement.xml -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     android:padding="10dp"
     tools:context=".ui.ShowAbonnements.ShowAbonnementFragment">
 
     <ListView
         android:id="@+id/abonnementListView"
-        android:layout_width="364dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/TitleListView"
         android:clipToPadding="false"
         android:divider="@android:color/darker_gray"
         android:dividerHeight="0.5dp" />
 
-</LinearLayout>
+    <!-- Ajouter le FloatingActionButton avec des couleurs personnalisées -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddAbonnement"
+        android:layout_width="100dp"
+        android:layout_height="53dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/white"
+        app:rippleColor="@color/purple_200"
+        app:srcCompat="@android:drawable/ic_menu_add" />
+
+</RelativeLayout>

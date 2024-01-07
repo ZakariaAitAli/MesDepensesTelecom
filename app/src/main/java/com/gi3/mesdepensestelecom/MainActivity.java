@@ -54,11 +54,12 @@ public class MainActivity extends AppCompatActivity {
         // Set up a Floating Action Button (FAB) with a SnackBar
         if (binding.appBarMain.fab != null) {
             binding.appBarMain.fab.setOnClickListener(view -> {
-                String displayName = sharedPreferences.getString("display_name", "");
+               /* String displayName = sharedPreferences.getString("display_name", "");
                 String userId = sharedPreferences.getString("user_id", "");
                 String snackbarMessage = "Welcome, " + displayName + "!" + "\n" + "User ID: " + userId;
                 Snackbar.make(binding.appBarMain.fab, snackbarMessage, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                */
             });
         }
 

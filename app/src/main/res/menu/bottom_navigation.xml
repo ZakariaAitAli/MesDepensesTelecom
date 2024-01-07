@@ -17,15 +17,15 @@
             android:icon="@drawable/ic_slideshow_black_24dp"
             android:title="@string/menu_slideshow" />
         <item
-<<<<<<< HEAD
+
             android:id="@+id/nav_form_abonnement"
             android:icon="@drawable/ic_slideshow_black_24dp"
             android:title="@string/menu_form_abonnement" />
 
-=======
+        <item
             android:id="@+id/nav_recharge"
             android:icon="@android:drawable/ic_input_add"
             android:title="@string/menu_recharge" />
->>>>>>> 59c4360 (oumayma)
+
     </group>
 </menu>

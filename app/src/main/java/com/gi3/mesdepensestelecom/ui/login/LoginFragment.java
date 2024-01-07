@@ -151,7 +151,7 @@ public class LoginFragment extends Fragment {
         // TODO : initiate successful logged in experience
         if (getContext() != null && getContext().getApplicationContext() != null) {
             Toast.makeText(getContext().getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
-            NavHostFragment.findNavController(this).navigate(R.id.nav_transform);
+            NavHostFragment.findNavController(this).navigate(R.id.nav_reflow);
         }
     }
 

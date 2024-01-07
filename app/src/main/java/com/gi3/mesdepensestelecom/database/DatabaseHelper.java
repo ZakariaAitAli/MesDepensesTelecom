@@ -86,10 +86,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put("username", user.username);
         contentValues.put("password", user.password);
+
         long result = db.insert("users", null, contentValues);
         db.close();
+
         return result;
     }
+
 
     public boolean checkUsername(String username) {
         SQLiteDatabase db = this.getReadableDatabase();

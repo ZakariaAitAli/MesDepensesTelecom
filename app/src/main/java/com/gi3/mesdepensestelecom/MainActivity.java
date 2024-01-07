@@ -1,5 +1,6 @@
 package com.gi3.mesdepensestelecom;
 
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,7 +15,6 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.gi3.mesdepensestelecom.Models.TypeAbonnement;
 import com.gi3.mesdepensestelecom.database.AbonnementRepository;
 import com.gi3.mesdepensestelecom.database.DatabaseHelper;
 import com.gi3.mesdepensestelecom.databinding.ActivityMainBinding;
@@ -28,9 +28,13 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     DatabaseHelper databaseHelper ;
+    SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Get the shared preferences
+        sharedPreferences = getSharedPreferences("user_session", MODE_PRIVATE);
 
         //MIGRATIONS:
         databaseHelper = new DatabaseHelper(this);
@@ -49,8 +53,13 @@ public class MainActivity extends AppCompatActivity {
 
         // Set up a Floating Action Button (FAB) with a SnackBar
         if (binding.appBarMain.fab != null) {
-            binding.appBarMain.fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show());
+            binding.appBarMain.fab.setOnClickListener(view -> {
+                String displayName = sharedPreferences.getString("display_name", "");
+                String userId = sharedPreferences.getString("user_id", "");
+                String snackbarMessage = "Welcome, " + displayName + "!" + "\n" + "User ID: " + userId;
+                Snackbar.make(binding.appBarMain.fab, snackbarMessage, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            });
         }
 
         // Find the NavHostFragment for navigation

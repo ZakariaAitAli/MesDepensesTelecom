@@ -1,8 +1,10 @@
 package com.gi3.mesdepensestelecom.database;
 // UserRepository.java
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 
 import com.gi3.mesdepensestelecom.Models.User;
 
@@ -22,6 +24,17 @@ public class UserRepository {
 
     public long addUser(User user) {
         return databaseHelper.insertUser(user);
+    }
+
+    public long insertUser(User user) {
+        SQLiteDatabase db = this.databaseHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("username", user.username);
+        contentValues.put("password", user.password);
+
+        long result = db.insert("users", null, contentValues);
+        db.close();
+        return result;
     }
 
     public boolean checkUsername(String username) {

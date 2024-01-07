@@ -9,4 +9,9 @@ public class Supplement {
 
     public String date ;
 
+    public Supplement( int idAbonnement,  float prix, String date ){
+        this.idAbonnement =idAbonnement;
+        this.prix=prix;
+        this.date=date;
+    }
 }

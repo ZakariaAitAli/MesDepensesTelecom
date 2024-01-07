@@ -24,7 +24,7 @@ public class ShowAbonnementFragment extends Fragment {
     private ListView abonnementListView;
     private AbonnementRepository abonnementRepository;
 
-
+    List<String> abonnements;
 
     public ShowAbonnementFragment() {
         // Constructeur vide requis
@@ -39,10 +39,9 @@ public class ShowAbonnementFragment extends Fragment {
         abonnementRepository = new AbonnementRepository(requireContext());
 
         // Récupérer les abonnements pour un utilisateur spécifique
-        List<Abonnement> abonnements = abonnementRepository.getAllAbonnementsByUserId(1);
-
+        abonnements = abonnementRepository.getAllAbonnementsByUserId(1);
         // Créer un adaptateur pour afficher les abonnements dans le ListView
-        ArrayAdapter<Abonnement> adapter = new ArrayAdapter<>(requireContext(),
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(),
                 android.R.layout.simple_list_item_1, abonnements);
 
         // Définir l'adaptateur sur le ListView

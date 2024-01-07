@@ -45,9 +45,9 @@ public class AbonnementFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_abonnement, container, false);
 
         operatorHashMap = new HashMap<>();
-        operatorHashMap.put(1, "IAM");
-        operatorHashMap.put(2, "INWI");
-        operatorHashMap.put(3, "ORANGE");
+        operatorHashMap.put(0, "IAM");
+        operatorHashMap.put(1, "INWI");
+        operatorHashMap.put(2, "ORANGE");
 
         spinnerOperator = view.findViewById(R.id.spinnerOperator);
         btnStartDate = view.findViewById(R.id.btnStartDate);
@@ -57,11 +57,11 @@ public class AbonnementFragment extends Fragment {
         buttonSubmit = view.findViewById(R.id.buttonSubmit);
 
         TypeAbonnementHashMap = new HashMap<>();
-        TypeAbonnementHashMap.put(1, "Fibre Optique");
-        TypeAbonnementHashMap.put(2, "WIFI");
-        TypeAbonnementHashMap.put(3, "Mobile Appel");
-        TypeAbonnementHashMap.put(4, "Fixe");
-        TypeAbonnementHashMap.put(5, "Mobile Internet");
+        TypeAbonnementHashMap.put(0, "Fibre Optique");
+        TypeAbonnementHashMap.put(1, "WIFI");
+        TypeAbonnementHashMap.put(2, "Mobile Appel");
+        TypeAbonnementHashMap.put(3, "Fixe");
+        TypeAbonnementHashMap.put(4, "Mobile Internet");
 
         // Initialiser le calendrier
         calendar = Calendar.getInstance();
@@ -168,7 +168,7 @@ public class AbonnementFragment extends Fragment {
     }
 
     // Helper method to get the key from the value in a HashMap
-    private int getKeyByValue(HashMap<Integer, String> hashMap, String value) {
+    public static int getKeyByValue(HashMap<Integer, String> hashMap, String value) {
         for (HashMap.Entry<Integer, String> entry : hashMap.entrySet()) {
             if (entry.getValue().equals(value)) {
                 return entry.getKey();

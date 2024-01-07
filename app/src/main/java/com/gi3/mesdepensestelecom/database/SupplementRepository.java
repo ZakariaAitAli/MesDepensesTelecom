@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.gi3.mesdepensestelecom.Models.Recharge;
 import com.gi3.mesdepensestelecom.Models.Supplement;
@@ -18,10 +19,10 @@ public class SupplementRepository {
 
     }
 
-    public HashMap<Integer, String> getAbonnementsMapByUserId(Integer userId){
+    public HashMap<Integer, String> getAbonnementsMapByUserId(int userId){
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
         String[] projection = {"id", "typeAbonnement" /* Add other columns as needed */};
-        String selection = userId    + " = ?";
+        String selection = "userId = ?";
         String[] selectionArgs = {String.valueOf(userId)};
         Cursor cursor = db.query("abonnements", projection, selection, selectionArgs, null, null, null);
 
@@ -43,21 +44,24 @@ public class SupplementRepository {
             cursor.close();
         }
 
+        Log.d("abonnementsMapSize", String.valueOf(abonnementsMap.size()));
+
+
         return abonnementsMap;
     }
 
-    private String transformTypeAbonnement(int typeAbonnement) {
+    static String transformTypeAbonnement(int typeAbonnement) {
         // You can implement your transformation logic here
         switch (typeAbonnement) {
-            case 1:
+            case 0:
                 return "fibreOptique";
-            case 2:
+            case 1:
                 return "WIFI";
-            case 3:
+            case 2:
                 return "MobileAppel";
-            case 4:
+            case 3:
                 return "Fixe";
-            case 5:
+            case 4:
                 return "MobileInternet";
             default:
                 return "Unknown";
@@ -68,8 +72,8 @@ public class SupplementRepository {
     public long insertRechargeSupplement(Supplement supplement) {
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("somme", supplement.prix);
-        values.put("operateur", supplement.idAbonnement);
+        values.put("prix", supplement.prix);
+        values.put("abonnementId", supplement.idAbonnement);
         values.put("date", supplement.date);
         long result = db.insert("supplements", null, values);
         db.close();

@@ -1,5 +1,7 @@
 package com.gi3.mesdepensestelecom.database;
 
+import static com.gi3.mesdepensestelecom.database.SupplementRepository.transformTypeAbonnement;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -60,8 +62,9 @@ public class AbonnementRepository extends SQLiteOpenHelper {
 
     }
 
-    public List<Abonnement> getAllAbonnementsByUserId(int userId) {
-        List<Abonnement> abonnements = new ArrayList<>();
+    public List<String> getAllAbonnementsByUserId(int userId) {
+        List<String> abonnements = new ArrayList<>();
+
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
 
         String[] columns = {"id", "dateDebut", "dateFin", "prix", "typeAbonnement", "operateur"};
@@ -71,17 +74,26 @@ public class AbonnementRepository extends SQLiteOpenHelper {
         Cursor cursor = db.query("abonnements", columns, selection, selectionArgs, null, null, null);
 
         while (cursor.moveToNext()) {
-            Abonnement abonnement = new Abonnement();
+            //Abonnement abonnement = new Abonnement();
 
 
-            abonnement.Id =cursor.getInt(0);
+           /* abonnement.Id =cursor.getInt(0);
             abonnement.dateDebut =cursor.getString(1);
             abonnement.dateFin =cursor.getString(2);
             abonnement.prix=cursor.getFloat(3);
             abonnement.typeAbonnement=cursor.getInt(4);
             abonnement.operateur=cursor.getInt(5);
+                        abonnements.add(abonnement);
 
-            abonnements.add(abonnement);
+            */
+            int id = cursor.getInt(0);
+            String dateDebut =cursor.getString(1);
+            String dateFin =cursor.getString(2);
+            String prix =cursor.getString(3);
+            String typeAbonnement= transformTypeAbonnement(cursor.getInt(4));
+            String abonnementData = typeAbonnement + "- Montant: " + prix + "Dhs - Date fin: "+ dateFin ;
+            abonnements.add(abonnementData);
+
         }
 
         cursor.close();

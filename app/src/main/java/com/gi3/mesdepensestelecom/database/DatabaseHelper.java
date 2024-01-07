@@ -38,7 +38,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
         if (!isTableExists(MyDatabase, "recharges")) {
-            MyDatabase.execSQL("create Table recharges(" + " id INTEGER primary key, " + "date String ," + "somme float, " + "userId INTEGER," + "FOREIGN KEY(userId) REFERENCES users(id) )");
+            MyDatabase.execSQL("create Table recharges(" + " id INTEGER primary key, " + "date String ," + "somme float, " + "userId INTEGER," + "operateur Integer," + "FOREIGN KEY(userId) REFERENCES users(id) )" );
         }
     }
 

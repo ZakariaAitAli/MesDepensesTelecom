@@ -1,5 +1,6 @@
 package com.gi3.mesdepensestelecom.ui.login;
 
+import android.content.SharedPreferences;
 import android.util.Patterns;
 
 import androidx.lifecycle.LiveData;
@@ -16,10 +17,13 @@ public class LoginViewModel extends ViewModel {
     private final MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
     private final MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
     private final LoginRepository loginRepository;
+    private SharedPreferences sharedPreferences;
 
-    LoginViewModel(LoginRepository loginRepository) {
+    LoginViewModel(LoginRepository loginRepository, SharedPreferences sharedPreferences) {
         this.loginRepository = loginRepository;
+        this.sharedPreferences = sharedPreferences;
     }
+
 
     LiveData<LoginFormState> getLoginFormState() {
         return loginFormState;
@@ -29,16 +33,23 @@ public class LoginViewModel extends ViewModel {
         return loginResult;
     }
 
-    public void login(String username, String password) {
+    public void login(String username, String password, SharedPreferences sharedPreferences) {
         // can be launched in a separate asynchronous job
         Result<LoggedInUser> result = loginRepository.login(username, password);
 
-        if (result instanceof Result.Success) {
+            if (result instanceof Result.Success) {
             LoggedInUser data = ((Result.Success<LoggedInUser>) result).getData();
             loginResult.setValue(new LoginResult(new LoggedInUserView(data.getDisplayName())));
+            saveUserSession(data.getUserId(), data.getDisplayName());
         } else {
             loginResult.setValue(new LoginResult(R.string.login_failed));
         }
+    }
+    private void saveUserSession(String userId, String displayName) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("user_id", userId);
+        editor.putString("display_name", displayName);
+        editor.apply();
     }
 
     public void loginDataChanged(String username, String password) {
@@ -70,5 +81,13 @@ public class LoginViewModel extends ViewModel {
 
     public void logout() {
         loginRepository.logout();
+        clearUserSession();
+    }
+
+    private void clearUserSession() {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove("user_id");
+        editor.remove("display_name");
+        editor.apply();
     }
 }

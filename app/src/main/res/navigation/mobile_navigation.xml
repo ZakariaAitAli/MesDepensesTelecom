@@ -70,4 +70,12 @@
         android:label="Recharge Supplément"
         tools:layout="@layout/fragment_recharge_supplement" />
 
+
+    <fragment
+        android:id="@+id/nav_showAbonnements"
+        android:name="com.gi3.mesdepensestelecom.ui.ShowAbonnements.ShowAbonnementFragment"
+        android:label="Abonnements"
+        tools:layout="@layout/fragment_all_abonnements" />
+
+
 </navigation>

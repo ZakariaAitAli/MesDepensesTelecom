@@ -1,0 +1,26 @@
+<!-- res/layout/item_abonnement.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/dateDebutTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date de début: " />
+
+    <TextView
+        android:id="@+id/dateFinTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date de fin: " />
+
+    <TextView
+        android:id="@+id/prixTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Prix: " />
+
+</LinearLayout>
